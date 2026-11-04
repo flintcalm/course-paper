@@ -98,5 +98,11 @@
         </div>
     </footer>
 
+    <script>
+        const today = new Date();
+        const minBirthDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+        document.getElementById('birthdate1').max = minBirthDate.toISOString().split('T')[0];
+    </script>
+
 </body>
 </html>

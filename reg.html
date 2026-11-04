@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация - AirClick</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="img/logo-plane.png" alt="AirClick" class="logo-img">
+                </div>
+                <div><span>Air</span><span>Click</span></div>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="reg.html" class="active">Регистрация</a></li>
+                    <li><a href="authy.html">Вход</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container auth-container">
+            <h1 class="page-title">Регистрация</h1>
+            
+            <div class="card">
+                <form action="php/register.php" method="post">
+                    <div class="form-group">
+                        <label for="reg-login">Логин *</label>
+                        <input type="text" id="reg-login" name="login" placeholder="Логин (минимум 6 символов, латиница и цифры)" pattern="[a-zA-Z0-9]{6,}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-password">Пароль *</label>
+                        <input type="password" id="reg-password" name="password" placeholder="Пароль (минимум 8 символов)" minlength="8" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group form-col">
+                            <label for="reg-surname">Фамилия *</label>
+                            <input type="text" id="reg-surname" name="surname" placeholder="Фамилия" required>
+                        </div>
+                        <div class="form-group form-col">
+                            <label for="reg-name">Имя *</label>
+                            <input type="text" id="reg-name" name="name" placeholder="Имя" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-patronymic">Отчество</label>
+                        <input type="text" id="reg-patronymic" name="patronymic" placeholder="Отчество">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-phone">Телефон *</label>
+                        <input type="tel" id="reg-phone" name="phone" placeholder="89999990000" pattern="8[0-9]{10}" maxlength="11" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-email">E-mail *</label>
+                        <input type="email" id="reg-email" name="email" placeholder="example@mail.ru" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-block">Зарегистрироваться</button>
+                    
+                    <div class="auth-links">
+                        <a href="authy.html">Уже есть аккаунт? Войти</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="copyright">
+                <p>&copy; 2013-2026 AirClick. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
