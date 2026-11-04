@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рейсы - AirClick</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="img/logo-plane.png" alt="AirClick" class="logo-img">
+                </div>
+                <div><span>Air</span><span>Click</span></div>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="flights.html" class="active">Рейсы</a></li>
+                    <li><a href="booking.html">Бронирование</a></li>
+                    <li><a href="my-bookings.html">Мои бронирования</a></li>
+                    <li><a href="about.html">О компании</a></li>
+                    <li><a href="contacts.html">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1 class="page-title">Доступные рейсы</h1>
+
+            <div class="card">
+                <h3 class="filter-title">Фильтры поиска</h3>
+                <div class="filters-row">
+                    <div class="filter-group">
+                        <label for="sort">Сортировка:</label>
+                        <select id="sort">
+                            <option value="price_asc">Цена (по возрастанию)</option>
+                            <option value="price_desc">Цена (по убыванию)</option>
+                            <option value="duration">Длительность перелета</option>
+                            <option value="departure">Время вылета</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="airlines">Авиакомпании:</label>
+                        <select id="airlines">
+                            <option value="all">Все авиакомпании</option>
+                            <option value="Аэрофлот">Аэрофлот</option>
+                            <option value="S7 Airlines">S7 Airlines</option>
+                            <option value="Уральские авиалинии">Уральские авиалинии</option>
+                            <option value="Lufthansa">Lufthansa</option>
+                            <option value="Emirates">Emirates</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="price_range">Ценовой диапазон:</label>
+                        <select id="price_range">
+                            <option value="all">Любая цена</option>
+                            <option value="0-15000">До 15 000 ₽</option>
+                            <option value="15000-30000">15 000 - 30 000 ₽</option>
+                            <option value="30000-50000">30 000 - 50 000 ₽</option>
+                            <option value="50000+">Более 50 000 ₽</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flight-list" id="flightList"></div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-section">
+                    <h3>AirClick</h3>
+                    <p>Лидер в области онлайн-бронирования авиабилетов с 2013 года. Мы делаем путешествия доступными для каждого.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Навигация</h3>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="flights.html">Рейсы</a></li>
+                        <li><a href="my-bookings.html">Мои бронирования</a></li>
+                        <li><a href="about.html">О компании</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <div class="contact-info">+7 (495) 123-45-67</div>
+                    <div class="contact-info">info@airclick.ru</div>
+                    <div class="contact-info">Москва, ул. Авиаторов, 15</div>
+                </div>
+            </div>
+            <div class="copyright"><p>&copy; 2013-2026 AirClick. Все права защищены.</p></div>
+        </div>
+    </footer>
+
+</body>
+</html>
