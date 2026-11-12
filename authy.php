@@ -6,8 +6,8 @@ if (isset($_SESSION['user_id'])) {
     exit;
 }
 
-$error = $_SESSION['auth_error'] ?? '';
-unset($_SESSION['auth_error']);
+$error = $_SESSION['authy_error'] ?? '';
+unset($_SESSION['authy_error']);
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -49,15 +49,15 @@ unset($_SESSION['auth_error']);
         </nav>
     </header>
 
-    <main class="auth">
+    <main class="authy">
         <h1 class="page-title">Вход в систему</h1>
 
         <div class="card">
             <?php if ($error): ?>
-                <p class="auth-error"><?= htmlspecialchars($error) ?></p>
+                <p class="authy-error"><?= htmlspecialchars($error) ?></p>
             <?php endif; ?>
 
-            <form action="php/auth.php" method="post">
+            <form action="php/authy.php" method="post">
                 <div class="form-group">
                     <label for="login">Логин *</label>
                     <input type="text" id="login" name="login" placeholder="Введите логин" required>
@@ -70,7 +70,7 @@ unset($_SESSION['auth_error']);
 
                 <button type="submit" class="btn btn-block">Войти</button>
 
-                <div class="auth-links">
+                <div class="authy-links">
                     <a href="reg.php">Ещё не зарегистрированы? Регистрация</a>
                 </div>
             </form>

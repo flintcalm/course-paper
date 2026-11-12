@@ -50,7 +50,7 @@ require_once 'php/my-bookings.php';
             <div class="card" style="text-align: center; padding: 40px;">
                 <h2>У вас пока нет бронирований</h2>
                 <p style="margin-bottom: 20px; color: #666;">Самое время отправиться в путешествие!</p>
-                <a href="index.html" class="btn">Найти рейсы</a>
+                <a href="index.php" class="btn">Найти рейсы</a>
             </div>
         <?php endif; ?>
 
@@ -93,8 +93,8 @@ require_once 'php/my-bookings.php';
                             </div>
                             
                             <div class="booking-meta" style="margin-top: 15px; font-size: 14px; color: #666;">
-                                Рейс: <?= htmlspecialchars($b['airline']) ?> (<?= htmlspecialchars($b['flight_number']) ?>) • 
-                                Класс: <?= htmlspecialchars($b['class_name']) ?> • 
+                                Рейс: <?= htmlspecialchars($b['airline']) ?> (<?= htmlspecialchars($b['flight_number']) ?>) •
+                                Класс: <?= htmlspecialchars($b['class_name']) ?> •
                                 Пассажиров: <?= $b['passenger_count'] ?>
                             </div>
                         </div>
@@ -134,7 +134,7 @@ require_once 'php/my-bookings.php';
                                 <span class="booking-date"><?= date('d.m.Y', strtotime($b['departure_date'])) ?></span>
                             </div>
                             <div class="booking-meta" style="margin-top: 10px; font-size: 14px; color: #666;">
-                                Рейс: <?= htmlspecialchars($b['airline']) ?> • 
+                                Рейс: <?= htmlspecialchars($b['airline']) ?> •
                                 Пассажиров: <?= $b['passenger_count'] ?>
                             </div>
                         </div>

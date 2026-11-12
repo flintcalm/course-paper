@@ -85,7 +85,7 @@ main {
     animation: fadeUp .5s ease-out .1s backwards;
 }
 
-main.auth {
+main.authy {
     max-width: 600px;
     margin: 0 auto;
     padding: 90px 20px;
@@ -272,24 +272,24 @@ footer {
     box-shadow: 0 0 0 2px rgba(0, 176, 255, .2);
 }
 
-.auth-links {
+.authy-links {
     margin-top: 20px;
     text-align: center;
 }
 
-.auth-links a {
+.authy-links a {
     color: #00b0ff;
     text-decoration: none;
     font-weight: 600;
     transition: color .3s;
 }
 
-.auth-links a:hover {
+.authy-links a:hover {
     color: #0091ea;
     text-decoration: underline;
 }
 
-.auth-error {
+.authy-error {
     color: #ff4081;
     margin-bottom: 20px;
     font-size: 14px;

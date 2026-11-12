@@ -5,7 +5,7 @@ require_once 'db.php';
 
 // 1. Проверка авторизации (если гость — отправляем на вход)
 if (!isset($_SESSION['user_id'])) {
-    header('Location: ../authy.html');
+    header('Location: ../authy.php');
     exit;
 }
 
@@ -23,7 +23,7 @@ mysqli_stmt_close($stmt);
 
 // Если пользователь вдруг не найден (например, удален)
 if (!$user) {
-    die('Ошибка: пользователь не найден. <a href="../authy.html">Выйти</a>');
+    die('Ошибка: пользователь не найден. <a href="../authy.php">Выйти</a>');
 }
 
 // 4. Получаем данные рейса и считаем итоговую цену

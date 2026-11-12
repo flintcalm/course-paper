@@ -4,7 +4,7 @@ require_once 'db.php';
 
 // 1. Проверка авторизации
 if (!isset($_SESSION['user_id'])) {
-    header('Location: ../authy.html');
+    header('Location: ../authy.php');
     exit;
 }
 
