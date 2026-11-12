@@ -16,6 +16,11 @@ CREATE TABLE users (
     INDEX idx_email (email)
 );
 
+ALTER TABLE users ADD role ENUM('user', 'admin') NOT NULL DEFAULT 'user';
+
+INSERT INTO users (login, password, surname, name, patronymic, gender, phone, email, role)
+VALUES ('admin', '$2y$10$e.wS3E9Q.9x9x9x9x9x9uO9x9x9x9x9x9x9x9x9x9x9x9x9x', 'Администратор', 'Главный', NULL, 'male', '80000000000', 'admin@airclick.ru', 'admin');
+
 CREATE TABLE fare_classes (
     id          INT PRIMARY KEY AUTO_INCREMENT,
     code        ENUM('economy','business','first') NOT NULL UNIQUE,

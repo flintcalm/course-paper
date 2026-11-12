@@ -1,5 +1,6 @@
 <?php
 session_start();
+$current_page = basename($_SERVER['PHP_SELF']);
 // Получаем ошибки и старые данные, затем сразу удаляем их из сессии
 $errors = $_SESSION['reg_errors'] ?? [];
 $old = $_SESSION['reg_old'] ?? [];
@@ -31,6 +32,10 @@ unset($_SESSION['reg_errors'], $_SESSION['reg_old']);
                     <li><a href="my-bookings.php" class="<?= $current_page == 'my-bookings.php' ? 'active' : '' ?>">Мои бронирования</a></li>
                 <?php endif; ?>
                 
+                <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
+                    <li><a href="admin.php" class="<?= $current_page == 'admin.php' ? 'active' : '' ?>" style="color: #ff4081; font-weight: bold;">Админ-панель</a></li>
+                <?php endif; ?>
+                
                 <li><a href="about.php" class="<?= $current_page == 'about.php' ? 'active' : '' ?>">О компании</a></li>
                 <li><a href="contacts.php" class="<?= $current_page == 'contacts.php' ? 'active' : '' ?>">Контакты</a></li>
                 
@@ -45,7 +50,7 @@ unset($_SESSION['reg_errors'], $_SESSION['reg_old']);
         </nav>
     </header>
 
-    <main class="auth">
+    <main class="authy">
         <h1 class="page-title">Регистрация</h1>
 
         <div class="card">
@@ -108,7 +113,7 @@ unset($_SESSION['reg_errors'], $_SESSION['reg_old']);
 
                 <button type="submit" class="btn btn-block">Зарегистрироваться</button>
 
-                <div class="auth-links">
+                <div class="authy-links">
                     <a href="authy.php">Уже есть аккаунт? Войти</a>
                 </div>
             </form>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+$current_page = basename($_SERVER['PHP_SELF']);
 // Если пользователь уже вошел, отправляем его на главную или в бронирования
 if (isset($_SESSION['user_id'])) {
     header('Location: my-bookings.php');
@@ -33,6 +34,10 @@ unset($_SESSION['authy_error']);
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <li><a href="booking.php" class="<?= $current_page == 'booking.php' ? 'active' : '' ?>">Бронирование</a></li>
                     <li><a href="my-bookings.php" class="<?= $current_page == 'my-bookings.php' ? 'active' : '' ?>">Мои бронирования</a></li>
+                <?php endif; ?>
+                
+                <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
+                    <li><a href="admin.php" class="<?= $current_page == 'admin.php' ? 'active' : '' ?>" style="color: #ff4081; font-weight: bold;">Админ-панель</a></li>
                 <?php endif; ?>
                 
                 <li><a href="about.php" class="<?= $current_page == 'about.php' ? 'active' : '' ?>">О компании</a></li>

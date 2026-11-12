@@ -86,7 +86,7 @@ main {
 }
 
 main.authy {
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 90px 20px;
 }
@@ -861,7 +861,37 @@ footer {
     color: #00b0ff;
 }
 
-@media (max-width: 768px) {
+/* Стили для таблиц админ-панели */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,.05);
+}
+.admin-table th, .admin-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+.admin-table th {
+    background-color: #f5f7fa;
+    color: #1a237e;
+    font-weight: 600;
+}
+.admin-table tr:hover {
+    background-color: #f9f9f9;
+}
+.admin-select {
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+@media (max-width: 1024px) {
     header {
         flex-direction: column;
         text-align: center;

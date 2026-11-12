@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'db.php';
+$current_page = 'my-bookings.php';
 
 // 1. Проверка авторизации
 if (!isset($_SESSION['user_id'])) {

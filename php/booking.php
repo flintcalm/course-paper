@@ -2,6 +2,7 @@
 session_start();
 // Подключаем БД (файл лежит в этой же папке)
 require_once 'db.php';
+$current_page = 'booking.php';
 
 // 1. Проверка авторизации (если гость — отправляем на вход)
 if (!isset($_SESSION['user_id'])) {
