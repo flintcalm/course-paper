@@ -29,13 +29,13 @@ $types = 's';
 
 // 6. Фильтрация
 if ($from) {
-    $sql .= " AND f.from_city = ?";
-    $params[] = $from;
+    $sql .= " AND f.from_city LIKE ?";
+    $params[] = '%' . $from . '%';
     $types .= 's';
 }
 if ($to) {
-    $sql .= " AND f.to_city = ?";
-    $params[] = $to;
+    $sql .= " AND f.to_city LIKE ?";
+    $params[] = '%' . $to . '%';
     $types .= 's';
 }
 if ($airline !== 'all') {

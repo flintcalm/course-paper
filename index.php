@@ -70,6 +70,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
                                 <option value="Стамбул">Стамбул</option>
                                 <option value="Бангкок">Бангкок</option>
                                 <option value="Анталья">Анталья</option>
+                                <option value="Казань">Казань</option>
+                                <option value="Екатеринбург">Екатеринбург</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -89,6 +91,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
                                 <option value="Стамбул">Стамбул</option>
                                 <option value="Бангкок">Бангкок</option>
                                 <option value="Анталья">Анталья</option>
+                                <option value="Казань">Казань</option>
+                                <option value="Екатеринбург">Екатеринбург</option>
                             </select>
                         </div>
                         <div class="form-group">
