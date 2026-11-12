@@ -1,3 +1,9 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$current_page = basename($_SERVER['PHP_SELF']);
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -9,19 +15,31 @@
 </head>
 <body>
     <header>
-        <a href="index.html" class="logo">
+        <a href="index.php" class="logo">
             <img src="img/logo-plane.png" alt="AirClick" class="logo-img">
             <span>Air</span><span>Click</span>
         </a>
         <nav>
             <ul>
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="flights.html">Рейсы</a></li>
-                <li><a href="booking.html">Бронирование</a></li>
-                <li><a href="my-bookings.html">Мои бронирования</a></li>
-                <li><a href="about.html" class="active">О компании</a></li>
-                <li><a href="contacts.html">Контакты</a></li>
-                <li><a href="authy.html">Вход</a></li>
+                <li><a href="index.php" class="<?= $current_page == 'index.php' ? 'active' : '' ?>">Главная</a></li>
+                <li><a href="flights.php" class="<?= $current_page == 'flights.php' ? 'active' : '' ?>">Рейсы</a></li>
+                
+                <!-- Показываем эти пункты ТОЛЬКО если пользователь авторизован -->
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <li><a href="booking.php" class="<?= $current_page == 'booking.php' ? 'active' : '' ?>">Бронирование</a></li>
+                    <li><a href="my-bookings.php" class="<?= $current_page == 'my-bookings.php' ? 'active' : '' ?>">Мои бронирования</a></li>
+                <?php endif; ?>
+                
+                <li><a href="about.php" class="<?= $current_page == 'about.php' ? 'active' : '' ?>">О компании</a></li>
+                <li><a href="contacts.php" class="<?= $current_page == 'contacts.php' ? 'active' : '' ?>">Контакты</a></li>
+                
+                <!-- Блок авторизации -->
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <li><a href="php/logout.php">Выход (<?= htmlspecialchars($_SESSION['user_name'] ?? '') ?>)</a></li>
+                <?php else: ?>
+                    <li><a href="authy.php" class="<?= $current_page == 'authy.php' ? 'active' : '' ?>">Вход</a></li>
+                    <li><a href="reg.php" class="<?= $current_page == 'reg.php' ? 'active' : '' ?>">Регистрация</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
     </header>
@@ -107,11 +125,13 @@
         <div class="footer-section">
             <h3>Навигация</h3>
             <ul>
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="flights.html">Рейсы</a></li>
-                <li><a href="my-bookings.html">Мои бронирования</a></li>
-                <li><a href="about.html">О компании</a></li>
-                <li><a href="contacts.html">Контакты</a></li>
+                <li><a href="index.php">Главная</a></li>
+                <li><a href="flights.php">Рейсы</a></li>
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <li><a href="my-bookings.php">Мои бронирования</a></li>
+                <?php endif; ?>
+                <li><a href="about.php">О компании</a></li>
+                <li><a href="contacts.php">Контакты</a></li>
             </ul>
         </div>
         <div class="footer-section">

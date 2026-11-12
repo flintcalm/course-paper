@@ -2,41 +2,27 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: var(--font-main);
-}
-
-:root {
-    --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --color-primary: #00b0ff;
-    --color-primary-dark: #0091ea;
-    --color-secondary: #ff4081;
-    --color-secondary-dark: #f50057;
-    --color-dark: #1a237e;
-    --color-dark-2: #283593;
-    --color-text: #333;
-    --color-text-light: #666;
-    --color-text-muted: #999;
-    --color-border: #e0e0e0;
-    --color-bg: #f5f7fa;
-    --color-white: #fff;
-    --transition: .3s;
-    --side-padding: max(20px, calc((100% - 1260px) / 2));
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 body {
-    background-color: var(--color-bg);
-    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+    background-color: #f5f7fa;
+    color: #333;
     line-height: 1.6;
-    animation: fadeUp var(--transition) ease-out;
+    animation: fadeUp .3s ease-out;
 }
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-dark-2) 100%);
-    color: var(--color-white);
-    padding: 15px var(--side-padding);
+    background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+    color: #fff;
+    padding: 15px max(20px, calc((100% - 1260px) / 2));
     box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
     position: sticky;
     top: 0;
@@ -49,7 +35,7 @@ header {
     font-size: 28px;
     font-weight: 700;
     text-decoration: none;
-    color: var(--color-white);
+    color: #fff;
 }
 
 .logo-img {
@@ -59,11 +45,11 @@ header {
 }
 
 .logo span:first-of-type {
-    color: var(--color-primary);
+    color:  #00b0ff;
 }
 
 .logo span:last-of-type {
-    color: var(--color-secondary);
+    color: #ff4081;
 }
 
 nav ul {
@@ -76,13 +62,13 @@ nav li {
 }
 
 nav a {
-    color: var(--color-white);
+    color: #fff;
     text-decoration: none;
     font-weight: 600;
     font-size: 16px;
     padding: 8px 12px;
     border-radius: 4px;
-    transition: all var(--transition);
+    transition: all .3s;
 }
 
 nav a:hover {
@@ -90,12 +76,12 @@ nav a:hover {
 }
 
 nav a.active {
-    background-color: var(--color-primary);
+    background-color:  #00b0ff;
 }
 
 main {
-    padding: 40px var(--side-padding);
-    min-height: calc(100vh - 200px);
+    padding: 40px  max(20px, calc((100% - 1260px) / 2));
+    min-height: calc(100vh - 500px);
     animation: fadeUp .5s ease-out .1s backwards;
 }
 
@@ -108,9 +94,9 @@ main.auth {
 footer {
     display: flex;
     flex-wrap: wrap;
-    background-color: var(--color-dark);
-    color: var(--color-white);
-    padding: 30px var(--side-padding);
+    background-color: #1a237e;
+    color: #fff;
+    padding: 30px max(20px, calc((100% - 1260px) / 2));
     margin-top: 40px;
 }
 
@@ -122,7 +108,7 @@ footer {
 
 .footer-section h3 {
     margin-bottom: 20px;
-    color: var(--color-primary);
+    color:  #00b0ff;
 }
 
 .footer-section ul {
@@ -134,13 +120,13 @@ footer {
 }
 
 .footer-section ul li a {
-    color: var(--color-border);
+    color: #e0e0e0;
     text-decoration: none;
-    transition: color var(--transition);
+    transition: color .3s;
 }
 
 .footer-section ul li a:hover {
-    color: var(--color-primary);
+    color: #00b0ff;
 }
 
 .footer-section .contact-info {
@@ -164,37 +150,37 @@ footer {
 }
 
 .page-title {
-    color: var(--color-dark);
+    color: #1a237e;
     margin-bottom: 30px;
     padding-bottom: 15px;
-    border-bottom: 2px solid var(--color-border);
+    border-bottom: 2px solid #e0e0e0;
 }
 
 .btn {
     display: inline-block;
     padding: 12px 28px;
-    background-color: var(--color-primary);
-    color: var(--color-white);
+    background-color: #00b0ff;
+    color: #fff;
     border: none;
     border-radius: 4px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color var(--transition);
+    transition: background-color .3s;
     text-decoration: none;
     text-align: center;
 }
 
 .btn:hover {
-    background-color: var(--color-primary-dark);
+    background-color: #0091ea;
 }
 
 .btn-secondary {
-    background-color: var(--color-secondary);
+    background-color: #ff4081;
 }
 
 .btn-secondary:hover {
-    background-color: var(--color-secondary-dark);
+    background-color: #f50057;
 }
 
 .btn-block {
@@ -202,7 +188,7 @@ footer {
 }
 
 .card {
-    background-color: var(--color-white);
+    background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
     padding: 25px;
@@ -217,7 +203,7 @@ footer {
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
-    color: var(--color-text);
+    color: #333;
 }
 
 .form-group input,
@@ -228,14 +214,61 @@ footer {
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 16px;
-    transition: border-color var(--transition);
+    transition: border-color .3s;
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--color-primary);
+    border-color: #00b0ff;
+    box-shadow: 0 0 0 2px rgba(0, 176, 255, .2);
+}
+
+/* Стили для выбора пола в виде квадратиков */
+.radio-group {
+    display: flex;
+    gap: 15px;
+}
+
+.radio-box {
+    flex: 1;
+    position: relative;
+    cursor: pointer;
+}
+
+/* Прячем стандартный кружок радиокнопки */
+.radio-box input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Стили для самого квадратика */
+.radio-box span {
+    display: block;
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+    transition: all .3s;
+    background-color: #fff;
+}
+
+/* Эффект при наведении */
+.radio-box:hover span {
+    border-color: #00b0ff;
+}
+
+/* Стили для выбранного квадратика (когда радиокнопка внутри активна) */
+.radio-box input[type="radio"]:checked + span {
+    border-color: #00b0ff;
+    background-color: rgba(0, 176, 255, .1);
+    color: #00b0ff;
+    font-weight: 600;
     box-shadow: 0 0 0 2px rgba(0, 176, 255, .2);
 }
 
@@ -245,19 +278,19 @@ footer {
 }
 
 .auth-links a {
-    color: var(--color-primary);
+    color: #00b0ff;
     text-decoration: none;
     font-weight: 600;
-    transition: color var(--transition);
+    transition: color .3s;
 }
 
 .auth-links a:hover {
-    color: var(--color-primary-dark);
+    color: #0091ea;
     text-decoration: underline;
 }
 
 .auth-error {
-    color: var(--color-secondary);
+    color: #ff4081;
     margin-bottom: 20px;
     font-size: 14px;
     font-weight: 600;
@@ -268,7 +301,7 @@ footer {
     background: linear-gradient(rgba(26, 35, 126, .85), rgba(26, 35, 126, .9));
     background-size: cover;
     background-position: center;
-    color: var(--color-white);
+    color: #fff;
     padding: 80px 0;
     text-align: center;
     border-radius: 10px;
@@ -287,7 +320,7 @@ footer {
 }
 
 .search-form {
-    background-color: var(--color-white);
+    background-color: #fff;
     padding: 25px;
     border-radius: 8px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, .15);
@@ -296,7 +329,7 @@ footer {
 }
 
 .search-title {
-    color: var(--color-dark);
+    color: #1a237e;
     margin-bottom: 20px;
 }
 
@@ -415,7 +448,7 @@ footer {
 }
 
 .flight-summary h3 {
-    color: var(--color-dark);
+    color: #1a237e;
     margin-bottom: 15px;
 }
 
@@ -457,11 +490,11 @@ footer {
 .flight-card {
     display: flex;
     flex-wrap: wrap;
-    border: 1px solid var(--color-border);
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
     margin-bottom: 20px;
     overflow: hidden;
-    transition: transform var(--transition), box-shadow var(--transition);
+    transition: transform .3s, box-shadow .3s;
 }
 
 .flight-card:hover {
@@ -472,7 +505,7 @@ footer {
 .flight-info-section {
     flex: 3;
     padding: 20px;
-    background-color: var(--color-white);
+    background-color: #fff;
 }
 
 .flight-price-section {
@@ -482,7 +515,7 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-left: 1px dashed var(--color-border);
+    border-left: 1px dashed #e0e0e0;
 }
 
 .flight-time {
@@ -507,7 +540,7 @@ footer {
 .price {
     font-size: 28px;
     font-weight: 700;
-    color: var(--color-primary);
+    color:  #00b0ff;
     margin-bottom: 15px;
 }
 
@@ -521,7 +554,7 @@ footer {
 }
 
 .flight-city {
-    color: var(--color-text-light);
+    color: #666;
 }
 
 .flight-middle {
@@ -530,7 +563,7 @@ footer {
 
 .flight-stops-note {
     font-size: 14px;
-    color: var(--color-text-muted);
+    color: #999;
 }
 
 .flight-arrival {
@@ -539,7 +572,7 @@ footer {
 
 .arrival-day-note {
     font-size: 12px;
-    color: var(--color-text-muted);
+    color: #999;
 }
 
 .flight-route-title {
@@ -581,7 +614,7 @@ footer {
 .contact-icon {
     width: 50px;
     height: 50px;
-    background-color: var(--color-primary);
+    background-color: #00b0ff;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -600,7 +633,7 @@ footer {
 }
 
 .contact-note {
-    color: var(--color-text-light);
+    color: #666;
     font-size: 14px;
 }
 
@@ -617,7 +650,7 @@ footer {
 }
 
 .faq-question {
-    color: var(--color-dark);
+    color: #1a237e;
 }
 
 .map-container {
@@ -626,7 +659,7 @@ footer {
     border-radius: 8px;
     overflow: hidden;
     margin-top: 30px;
-    background-color: var(--color-border);
+    background-color: #e0e0e0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -640,7 +673,7 @@ footer {
 }
 
 .booking-card {
-    border: 1px solid var(--color-border);
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
     margin-bottom: 25px;
     overflow: hidden;
@@ -710,7 +743,7 @@ footer {
 
 .booking-date {
     margin-left: 15px;
-    color: var(--color-text-light);
+    color: #666;
 }
 
 .booking-flight-row {
@@ -726,16 +759,16 @@ footer {
 
 .booking-duration {
     font-size: 14px;
-    color: var(--color-text-light);
+    color: #666;
 }
 
 .booking-stops {
     font-size: 12px;
-    color: var(--color-text-muted);
+    color: #999;
 }
 
 .booking-passengers-block {
-    border-left: 1px solid var(--color-border);
+    border-left: 1px solid #e0e0e0;
     padding-left: 20px;
 }
 
@@ -746,7 +779,7 @@ footer {
 .booking-total-price {
     font-size: 24px;
     font-weight: 700;
-    color: var(--color-primary);
+    color: #00b0ff;
 }
 
 .btn-details {
@@ -795,7 +828,7 @@ footer {
 .advantage-card {
     flex: 1;
     min-width: 250px;
-    background-color: var(--color-bg);
+    background-color: #f5f7fa;
     padding: 20px;
     border-radius: 8px;
 }
@@ -825,7 +858,7 @@ footer {
 .stat-number {
     font-size: 36px;
     font-weight: 700;
-    color: var(--color-primary);
+    color: #00b0ff;
 }
 
 @media (max-width: 768px) {
@@ -854,7 +887,7 @@ footer {
 
     .flight-price-section {
         border-left: none;
-        border-top: 1px dashed var(--color-border);
+        border-top: 1px dashed #e0e0e0;
     }
 
     .contact-info {
