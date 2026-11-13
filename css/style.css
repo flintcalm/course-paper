@@ -22,11 +22,12 @@ header {
     align-items: center;
     background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
     color: #fff;
-    padding: 15px max(20px, calc((100% - 1260px) / 2));
+    padding: 15px max(20px, calc((100% - 1500px) / 2));
     box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
     position: sticky;
     top: 0;
     z-index: 100;
+    min-height: 75px;
 }
 
 .logo {
@@ -58,10 +59,13 @@ nav ul {
 }
 
 nav li {
-    margin-left: 25px;
+    align-items: center;
+    margin-left: 10px;
 }
 
 nav a {
+    text-wrap: nowrap;
+    align-items: center;
     color: #fff;
     text-decoration: none;
     font-weight: 600;
@@ -101,6 +105,9 @@ footer {
 }
 
 .footer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     flex: 1;
     min-width: 250px;
     margin-bottom: 20px;
@@ -891,7 +898,7 @@ footer {
     font-size: 14px;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
     header {
         flex-direction: column;
         text-align: center;

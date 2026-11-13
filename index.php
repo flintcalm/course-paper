@@ -29,7 +29,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <li><a href="booking.php" class="<?= $current_page == 'booking.php' ? 'active' : '' ?>">Бронирование</a></li>
                     <li><a href="my-bookings.php" class="<?= $current_page == 'my-bookings.php' ? 'active' : '' ?>">Мои бронирования</a></li>
                 <?php endif; ?>
-                
+
                 <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
                     <li><a href="admin.php" class="<?= $current_page == 'admin.php' ? 'active' : '' ?>" style="color: #ff4081; font-weight: bold;">Админ-панель</a></li>
                 <?php endif; ?>
@@ -201,17 +201,19 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </div>
         <div class="footer-section">
             <h3>Контакты</h3>
-            <div class="contact-info">
-                <span><img src="img/icon-phone.png" alt="Телефон" class="footer-icon"></span>
-                +7 (495) 123-45-67
-            </div>
-            <div class="contact-info">
-                <span><img src="img/icon-email.png" alt="Email" class="footer-icon"></span>
-                info@airclick.ru
-            </div>
-            <div class="contact-info">
-                <span><img src="img/icon-location.png" alt="Адрес" class="footer-icon"></span>
-                Москва, ул. Авиаторов, 15
+            <div class="">
+                <div class="contact-info">
+                    <span><img src="img/icon-phone.png" alt="Телефон" class="footer-icon"></span>
+                    +7 (495) 123-45-67
+                </div>
+                <div class="contact-info">
+                    <span><img src="img/icon-email.png" alt="Email" class="footer-icon"></span>
+                    info@airclick.ru
+                </div>
+                <div class="contact-info">
+                    <span><img src="img/icon-location.png" alt="Адрес" class="footer-icon"></span>
+                    Москва, ул. Авиаторов, 15
+                </div>
             </div>
         </div>
         <div class="copyright">

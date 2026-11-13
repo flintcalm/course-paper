@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // 2. Получаем параметры из URL (ID рейса, класс, дата)
-$flight_id = $_GET['flight_id'] ?? 0;
+$flight_id = (int)($_GET['flight_id'] ?? 0);
 $class = $_GET['class'] ?? 'economy';
 $departure_date = $_GET['departure'] ?? date('Y-m-d'); // Если даты нет, ставим сегодня
 

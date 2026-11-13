@@ -157,17 +157,19 @@ require_once 'php/flights.php';
         </div>
         <div class="footer-section">
             <h3>Контакты</h3>
-            <div class="contact-info">
-                <span><img src="img/icon-phone.png" alt="Телефон" class="footer-icon"></span>
-                +7 (495) 123-45-67
-            </div>
-            <div class="contact-info">
-                <span><img src="img/icon-email.png" alt="Email" class="footer-icon"></span>
-                info@airclick.ru
-            </div>
-            <div class="contact-info">
-                <span><img src="img/icon-location.png" alt="Адрес" class="footer-icon"></span>
-                Москва, ул. Авиаторов, 15
+            <div class="">
+                <div class="contact-info">
+                    <span><img src="img/icon-phone.png" alt="Телефон" class="footer-icon"></span>
+                    +7 (495) 123-45-67
+                </div>
+                <div class="contact-info">
+                    <span><img src="img/icon-email.png" alt="Email" class="footer-icon"></span>
+                    info@airclick.ru
+                </div>
+                <div class="contact-info">
+                    <span><img src="img/icon-location.png" alt="Адрес" class="footer-icon"></span>
+                    Москва, ул. Авиаторов, 15
+                </div>
             </div>
         </div>
         <div class="copyright">

@@ -47,8 +47,15 @@ elseif ($action === 'delete_user') {
         
         // 2. Удаляем пассажиров и брони
         foreach ($bookings as $b) {
-            mysqli_query($connect, "DELETE FROM passengers WHERE booking_id = " . $b['id']);
-            mysqli_query($connect, "DELETE FROM bookings WHERE id = " . $b['id']);
+            $stmt_del_p = mysqli_prepare($connect, "DELETE FROM passengers WHERE booking_id = ?");
+            mysqli_stmt_bind_param($stmt_del_p, 'i', $b['id']);
+            mysqli_stmt_execute($stmt_del_p);
+            mysqli_stmt_close($stmt_del_p);
+
+            $stmt_del_b = mysqli_prepare($connect, "DELETE FROM bookings WHERE id = ?");
+            mysqli_stmt_bind_param($stmt_del_b, 'i', $b['id']);
+            mysqli_stmt_execute($stmt_del_b);
+            mysqli_stmt_close($stmt_del_b);
         }
         
         // 3. Удаляем самого пользователя

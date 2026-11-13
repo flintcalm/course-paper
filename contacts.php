@@ -105,22 +105,22 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
             <div class="contact-form card">
                 <h2 class="contact-title">Написать нам</h2>
-                <form id="contact-form">
+                <form id="contact-form" action="php/send_message.php" method="POST">
                     <div class="form-group">
                         <label for="contact-name">Ваше имя *</label>
-                        <input type="text" id="contact-name" required>
+                        <input type="text" id="contact-name" name="name" required>
                     </div>
                     <div class="form-group">
                         <label for="contact-email">Ваш email *</label>
-                        <input type="email" id="contact-email" required>
+                        <input type="email" id="contact-email" name="email" required>
                     </div>
                     <div class="form-group">
                         <label for="contact-phone">Телефон</label>
-                        <input type="tel" id="contact-phone">
+                        <input type="tel" id="contact-phone" name="phone">
                     </div>
                     <div class="form-group">
                         <label for="contact-subject">Тема *</label>
-                        <select id="contact-subject" required>
+                        <select id="contact-subject" name="subject" required>
                             <option value="">Выберите тему</option>
                             <option value="booking">Бронирование билетов</option>
                             <option value="cancel">Отмена/возврат билета</option>
@@ -131,7 +131,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     </div>
                     <div class="form-group">
                         <label for="contact-message">Сообщение *</label>
-                        <textarea id="contact-message" rows="5" required></textarea>
+                        <textarea id="contact-message" name="message" rows="5" required></textarea>
                     </div>
                     <button type="submit" class="btn btn-block">Отправить сообщение</button>
                 </form>
@@ -179,17 +179,19 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </div>
         <div class="footer-section">
             <h3>Контакты</h3>
-            <div class="contact-info">
-                <span><img src="img/icon-phone.png" alt="Телефон" class="footer-icon"></span>
-                +7 (495) 123-45-67
-            </div>
-            <div class="contact-info">
-                <span><img src="img/icon-email.png" alt="Email" class="footer-icon"></span>
-                info@airclick.ru
-            </div>
-            <div class="contact-info">
-                <span><img src="img/icon-location.png" alt="Адрес" class="footer-icon"></span>
-                Москва, ул. Авиаторов, 15
+            <div class="">
+                <div class="contact-info">
+                    <span><img src="img/icon-phone.png" alt="Телефон" class="footer-icon"></span>
+                    +7 (495) 123-45-67
+                </div>
+                <div class="contact-info">
+                    <span><img src="img/icon-email.png" alt="Email" class="footer-icon"></span>
+                    info@airclick.ru
+                </div>
+                <div class="contact-info">
+                    <span><img src="img/icon-location.png" alt="Адрес" class="footer-icon"></span>
+                    Москва, ул. Авиаторов, 15
+                </div>
             </div>
         </div>
         <div class="copyright">

@@ -116,7 +116,7 @@ require_once 'php/my-bookings.php';
         <!-- ПРОШЕДШИЕ / ОТМЕНЕННЫЕ БРОНИРОВАНИЯ -->
         <?php if (!empty($past_bookings)): ?>
             <h2 class="bookings-section-title bookings-section-title-past">История поездок</h2>
-            <?php foreach ($past_bookings as $b): 
+            <?php foreach ($past_bookings as $b):
                 // В истории могут быть отмененные или завершенные
                 $statusClass = ($b['status'] === 'cancelled') ? 'status-pending' : ''; // Используем оранжевый для отмены
                 $statusText = ($b['status'] === 'cancelled') ? 'Отменено' : 'Завершено';
@@ -172,17 +172,19 @@ require_once 'php/my-bookings.php';
         </div>
         <div class="footer-section">
             <h3>Контакты</h3>
-            <div class="contact-info">
-                <span><img src="img/icon-phone.png" alt="Телефон" class="footer-icon"></span>
-                +7 (495) 123-45-67
-            </div>
-            <div class="contact-info">
-                <span><img src="img/icon-email.png" alt="Email" class="footer-icon"></span>
-                info@airclick.ru
-            </div>
-            <div class="contact-info">
-                <span><img src="img/icon-location.png" alt="Адрес" class="footer-icon"></span>
-                Москва, ул. Авиаторов, 15
+            <div class="">
+                <div class="contact-info">
+                    <span><img src="img/icon-phone.png" alt="Телефон" class="footer-icon"></span>
+                    +7 (495) 123-45-67
+                </div>
+                <div class="contact-info">
+                    <span><img src="img/icon-email.png" alt="Email" class="footer-icon"></span>
+                    info@airclick.ru
+                </div>
+                <div class="contact-info">
+                    <span><img src="img/icon-location.png" alt="Адрес" class="footer-icon"></span>
+                    Москва, ул. Авиаторов, 15
+                </div>
             </div>
         </div>
         <div class="copyright">
