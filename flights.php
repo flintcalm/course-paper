@@ -119,6 +119,12 @@
                         <option value="S7 Airlines" <?= ($airline ?? '') === 'S7 Airlines' ? 'selected' : '' ?>>S7 Airlines</option>
                         <option value="Lufthansa" <?= ($airline ?? '') === 'Lufthansa' ? 'selected' : '' ?>>Lufthansa</option>
                         <option value="Emirates" <?= ($airline ?? '') === 'Emirates' ? 'selected' : '' ?>>Emirates</option>
+                        <option value="Уральские авиалинии" <?= ($airline ?? '') === 'Уральские авиалинии' ? 'selected' : '' ?>>Уральские авиалинии</option>
+                        <option value="Turkish Airlines" <?= ($airline ?? '') === 'Turkish Airlines' ? 'selected' : '' ?>>Turkish Airlines</option>
+                        <option value="Air France" <?= ($airline ?? '') === 'Air France' ? 'selected' : '' ?>>Air France</option>
+                        <option value="British Airways" <?= ($airline ?? '') === 'British Airways' ? 'selected' : '' ?>>British Airways</option>
+                        <option value="Победа" <?= ($airline ?? '') === 'Победа' ? 'selected' : '' ?>>Победа</option>
+                        <option value="Эмирейтс" <?= ($airline ?? '') === 'Эмирейтс' ? 'selected' : '' ?>>Эмирейтс</option>
                     </select>
                 </div>
                 <div class="input-group">

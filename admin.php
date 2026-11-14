@@ -42,7 +42,7 @@
         <div class="card">
             <h2 class="section-title">Управление бронированиями</h2>
             <form method="GET" action="admin.php" class="form-row align-end">
-                <div class="form-col" style="flex: 3;"> <!-- Даем селекту больше места -->
+                <div class="form-col" style="flex: 3;">
                     <div class="form-group mb-0">
                         <label>Пользователь:</label>
                         <select name="user_id" required>
@@ -270,6 +270,12 @@
                             <option value="S7 Airlines" <?= $f_airline == 'S7 Airlines' ? 'selected' : '' ?>>S7 Airlines</option>
                             <option value="Lufthansa" <?= $f_airline == 'Lufthansa' ? 'selected' : '' ?>>Lufthansa</option>
                             <option value="Emirates" <?= $f_airline == 'Emirates' ? 'selected' : '' ?>>Emirates</option>
+                            <option value="Уральские авиалинии" <?= $f_airline == 'Уральские авиалинии' ? 'selected' : '' ?>>Уральские авиалинии</option>
+                            <option value="Turkish Airlines" <?= $f_airline == 'Turkish Airlines' ? 'selected' : '' ?>>Turkish Airlines</option>
+                            <option value="Air France" <?= $f_airline == 'Air France' ? 'selected' : '' ?>>Air France</option>
+                            <option value="British Airways" <?= $f_airline == 'British Airways' ? 'selected' : '' ?>>British Airways</option>
+                            <option value="Победа" <?= $f_airline == 'Победа' ? 'selected' : '' ?>>Победа</option>
+                            <option value="Эмирейтс" <?= $f_airline == 'Эмирейтс' ? 'selected' : '' ?>>Эмирейтс</option>
                         </select>
                     </div>
                     <div class="form-col">
@@ -297,7 +303,6 @@
 
             <!-- Блок сортировки (4 пункта) -->
             <form method="GET" action="admin.php" class="filters-wrapper">
-                <!-- Сохраняем все остальные параметры, чтобы они не сбросились при сортировке -->
                 <?php if ($selected_user_id > 0): ?>
                     <input type="hidden" name="user_id" value="<?= $selected_user_id ?>">
                 <?php endif; ?>
@@ -349,6 +354,7 @@
                             <th>Маршрут</th>
                             <th>Время</th>
                             <th>Длительность</th>
+                            <th>Авиакомпания</th> <!-- ДОБАВЛЕНО -->
                             <th>Рейс</th>
                             <th>Цена</th>
                             <th>Действия</th>
@@ -356,7 +362,8 @@
                     </thead>
                     <tbody>
                         <?php if (empty($flights)): ?>
-                            <tr><td colspan="8" class="text-center">Рейсы по вашему запросу не найдены</td></tr>
+                            <!-- ОБНОВЛЕН COLSPAN C 8 НА 9 -->
+                            <tr><td colspan="9" class="text-center">Рейсы по вашему запросу не найдены</td></tr>
                         <?php endif; ?>
                         
                         <?php
@@ -369,15 +376,18 @@
                             <td><?= htmlspecialchars($f['from_city']) ?> — <?= htmlspecialchars($f['to_city']) ?></td>
                             <td><?= $f['departure_time'] ?> - <?= $f['arrival_time'] ?></td>
                             <td><?= htmlspecialchars($f['duration']) ?> / <?= $f['duration_min'] ?>м</td>
+                            <td><?= htmlspecialchars($f['airline']) ?></td> <!-- ДОБАВЛЕНО -->
                             <td><?= htmlspecialchars($f['flight_number']) ?></td>
                             <td><?= number_format($f['price'], 0, '', ' ') ?> ₽</td>
-                            <td class="actions-cell">
-                                <a href="admin.php?edit_id=<?= $f['id'] ?>" class="btn btn-sm">✎</a>
-                                <form action="php/admin_action.php" method="POST" onsubmit="return confirm('Удалить рейс?');">
-                                    <input type="hidden" name="action" value="delete_flight">
-                                    <input type="hidden" name="flight_id" value="<?= $f['id'] ?>">
-                                    <button type="submit" class="btn btn-secondary btn-sm">✖</button>
-                                </form>
+                            <td>
+                                <div class="actions-cell">
+                                    <a href="admin.php?edit_id=<?= $f['id'] ?>" class="btn btn-sm">✎</a>
+                                    <form action="php/admin_action.php" method="POST" onsubmit="return confirm('Удалить рейс?');">
+                                        <input type="hidden" name="action" value="delete_flight">
+                                        <input type="hidden" name="flight_id" value="<?= $f['id'] ?>">
+                                        <button type="submit" class="btn btn-secondary btn-sm">✖</button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -387,7 +397,7 @@
         </div>
     </main>
 
-    <!-- Небольшой скрипт, чтобы при изменении одного из 4-х видов сортировки, остальные сбрасывались -->
+    <!-- Скрипт для сброса остальных сортировок -->
     <script>
         function clearOtherSorts(changedName) {
             const selects = ['sort_id', 'sort_price', 'sort_dur', 'sort_time'];
