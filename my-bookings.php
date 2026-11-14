@@ -68,7 +68,7 @@
                             <h3 class="mb-10">
                                 <?= htmlspecialchars($b['from_city']) ?> — <?= htmlspecialchars($b['to_city']) ?>
                                 <span class="text-muted" style="font-size: 16px; font-weight: normal; margin-left: 10px;">
-                                    <?= date('d.m.Y', strtotime($b['departure_date'])) ?> 
+                                    <?= date('d.m.Y', strtotime($b['departure_date'])) ?>
                                     в <?= htmlspecialchars($b['departure_time']) ?> - <?= htmlspecialchars($b['arrival_time']) ?>
                                 </span>
                             </h3>
@@ -133,11 +133,12 @@
                         <div class="booking-flight-info">
                             <h3 class="mb-10">
                                 <?= htmlspecialchars($b['from_city']) ?> — <?= htmlspecialchars($b['to_city']) ?>
-                                <span style="font-size: 16px; font-weight: normal; margin-left: 10px;">
+                                <span class="text-muted" style="font-size: 16px; font-weight: normal; margin-left: 10px;">
                                     <?= date('d.m.Y', strtotime($b['departure_date'])) ?>
+                                    в <?= htmlspecialchars($b['departure_time']) ?> - <?= htmlspecialchars($b['arrival_time']) ?>
                                 </span>
                             </h3>
-                            <p style="font-size: 14px;">
+                            <p class="text-muted" style="font-size: 14px;">
                                 Рейс: <?= htmlspecialchars($b['airline']) ?> • Пассажиров: <?= $b['passenger_count'] ?>
                             </p>
                         </div>
@@ -148,12 +149,22 @@
                             <?php if ($b['status'] === 'cancelled'): ?>
                                 <?php
                                 $dep_datetime = strtotime($b['departure_date'] . ' ' . $b['departure_time']);
-                                if ($dep_datetime > (time() + 3600)):
+                                $time_left = $dep_datetime - time();
+                                // Показываем кнопку только если до вылета больше 20 минут
+                                if ($time_left > 1200):
+                                    // Определяем текст и цвет кнопки в зависимости от времени
+                                    if ($time_left > 3600) {
+                                        $btnText = 'Восстановить';
+                                        $btnClass = 'btn-restore';
+                                    } else {
+                                        $btnText = 'Восстановить и оплатить';
+                                        $btnClass = 'btn-pay'; // Зеленая кнопка
+                                    }
                                 ?>
                                     <form action="php/user_booking_action.php" method="POST" class="w-100">
                                         <input type="hidden" name="action" value="restore">
                                         <input type="hidden" name="booking_id" value="<?= $b['id'] ?>">
-                                        <button type="submit" class="btn btn-restore btn-block mb-10" onclick="return confirm('Восстановить бронь?')">Восстановить</button>
+                                        <button type="submit" class="btn <?= $btnClass ?> btn-block mb-10" onclick="return confirm('<?= $btnText ?>?')"><?= $btnText ?></button>
                                     </form>
                                 <?php endif; ?>
                             <?php endif; ?>
@@ -166,9 +177,13 @@
                         <h4 class="mb-10">Пассажиры</h4>
                         <ul class="passenger-list">
                             <?php foreach ($b['passengers'] as $p): ?>
-                                <li><b><?= htmlspecialchars($p['surname'] . ' ' . $p['name'] . ' ' . $p['patronymic']) ?></b></li>
+                                <li>
+                                    <b><?= htmlspecialchars($p['surname'] . ' ' . $p['name'] . ' ' . $p['patronymic']) ?></b><br>
+                                    Дата рождения: <?= date('d.m.Y', strtotime($p['birth_date'])) ?> • Документ: <?= htmlspecialchars($p['document']) ?>
+                                </li>
                             <?php endforeach; ?>
                         </ul>
+                        <p class="mt-10"><b>Контакты:</b> <?= htmlspecialchars($b['email']) ?> • <?= htmlspecialchars($b['phone']) ?></p>
                     </div>
                 </div>
             <?php endforeach; ?>

@@ -37,11 +37,15 @@ if ($booking_id > 0) {
             $new_status = 'cancelled';
         }
         // 3. ВОССТАНОВЛЕНИЕ
+                // 3. ВОССТАНОВЛЕНИЕ
         elseif ($action === 'restore' && $booking['status'] === 'cancelled') {
-            // Проверяем, что до вылета осталось больше 1 часа
+            // Проверяем время до вылета
             $dep_datetime = strtotime($booking['departure_date'] . ' ' . $booking['departure_time']);
-            if ($dep_datetime <= (time() + 3600)) {
-                $_SESSION['action_error'] = 'Нельзя восстановить билет: до вылета осталось менее 1 часа.';
+            $time_left = $dep_datetime - time();
+
+            // Если осталось меньше 20 минут - отказ
+            if ($time_left <= 1200) {
+                $_SESSION['action_error'] = 'Нельзя восстановить билет: до вылета осталось менее 20 минут.';
                 header('Location: ../my-bookings.php');
                 exit;
             }
@@ -68,7 +72,16 @@ if ($booking_id > 0) {
                 exit;
             }
 
-            $new_status = 'active'; // Восстанавливаем как активную (ожидает оплаты)
+            // Если осталось больше часа - просто восстанавливаем (нужна будет оплата позже)
+            if ($time_left > 3600) {
+                $new_status = 'active';
+                $_SESSION['action_success'] = 'Билет успешно восстановлен. Пожалуйста, оплатите его.';
+            }
+            // Если осталось от 20 минут до 1 часа - восстанавливаем и автоматически оплачиваем
+            else {
+                $new_status = 'confirmed';
+                $_SESSION['action_success'] = 'Билет успешно восстановлен и оплачен.';
+            }
         }
 
         // Если статус валиден - обновляем БД

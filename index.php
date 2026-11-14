@@ -1,6 +1,9 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
 $current_page = basename($_SERVER['PHP_SELF']);
+
+// Список всех 15 городов для выпадающих списков
+$cities = ['Москва', 'Санкт-Петербург', 'Сочи', 'Париж', 'Нью-Йорк', 'Токио', 'Дубай', 'Лондон', 'Рим', 'Пекин', 'Стамбул', 'Бангкок', 'Анталья', 'Казань', 'Екатеринбург'];
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -44,23 +47,22 @@ $current_page = basename($_SERVER['PHP_SELF']);
     </header>
 
     <main>
-        <!-- HERO-БЛОК С ПОИСКОМ -->
-        <div style="background: #283593; padding: 60px 20px; border-radius: 8px; text-align: center; color: #fff; margin-bottom: 40px;">
-            <h1 style="font-size: 36px; margin-bottom: 10px;">Путешествуйте с комфортом</h1>
-            <p style="margin-bottom: 30px;">AirClick предлагает лучшие цены на авиабилеты по всему миру. Быстрое бронирование, удобный поиск и надёжное обслуживание с 2013 года.</p>
+        <!-- БЛОК ПОИСКА -->
+        <div class="hero-search">
+            <h1>Путешествуйте с комфортом</h1>
+            <p>AirClick предлагает лучшие цены на авиабилеты по всему миру. Быстрое бронирование, удобный поиск и надёжное обслуживание с 2013 года.</p>
             
-            <div class="card" style="max-width: 900px; margin: 0 auto; text-align: left;">
-                <h3 class="text-center mb-20" style="color: #1a237e;">Найти рейсы</h3>
+            <div class="search-form-card">
+                <h3>Найти рейсы</h3>
                 <form action="flights.php" method="GET" class="form-row">
                     <div class="form-col">
                         <div class="form-group">
                             <label>Откуда</label>
                             <select name="from">
                                 <option value="">Выберите город вылета</option>
-                                <option value="Москва">Москва</option>
-                                <option value="Санкт-Петербург">Санкт-Петербург</option>
-                                <option value="Сочи">Сочи</option>
-                                <option value="Париж">Париж</option>
+                                <?php foreach ($cities as $city): ?>
+                                    <option value="<?= $city ?>"><?= $city ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
@@ -69,10 +71,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
                             <label>Куда</label>
                             <select name="to">
                                 <option value="">Выберите город назначения</option>
-                                <option value="Москва">Москва</option>
-                                <option value="Санкт-Петербург">Санкт-Петербург</option>
-                                <option value="Сочи">Сочи</option>
-                                <option value="Париж">Париж</option>
+                                <?php foreach ($cities as $city): ?>
+                                    <option value="<?= $city ?>"><?= $city ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
@@ -82,8 +83,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                             <input type="date" name="departure" id="depDate" required>
                         </div>
                     </div>
-                </form>
-                <form action="flights.php" method="GET" class="form-row mt-10">
+                    
                     <div class="form-col">
                         <div class="form-group">
                             <label>Класс</label>
@@ -94,8 +94,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
                             </select>
                         </div>
                     </div>
-                    <div class="form-col" style="display: flex; align-items: flex-end;">
-                        <button type="submit" class="btn btn-block mb-10">Найти рейсы</button>
+                    <div class="form-col search-btn-wrapper">
+                        <button type="submit" class="btn btn-block">Найти рейсы</button>
                     </div>
                 </form>
             </div>
@@ -104,17 +104,17 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <!-- ПРЕИМУЩЕСТВА -->
         <div class="form-row text-center mb-20">
             <div class="form-col">
-                <img src="img/icon-search.png" alt="Поиск" style="width: 48px; margin-bottom: 15px;">
+                <img src="img/icon-search.png" alt="Поиск" class="feature-icon-img">
                 <h3>Быстрый поиск</h3>
                 <p class="text-muted">Находите лучшие рейсы по выгодным ценам среди сотен авиакомпаний</p>
             </div>
             <div class="form-col">
-                <img src="img/icon-shield.png" alt="Безопасность" style="width: 48px; margin-bottom: 15px;">
+                <img src="img/icon-shield.png" alt="Безопасность" class="feature-icon-img">
                 <h3>Безопасная оплата</h3>
                 <p class="text-muted">Все платежи защищены с использованием современных технологий шифрования</p>
             </div>
             <div class="form-col">
-                <img src="img/icon-support.png" alt="Поддержка" style="width: 48px; margin-bottom: 15px;">
+                <img src="img/icon-support.png" alt="Поддержка" class="feature-icon-img">
                 <h3>Поддержка 24/7</h3>
                 <p class="text-muted">Наша служба поддержки готова помочь вам в любое время дня и ночи</p>
             </div>
@@ -125,29 +125,29 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <div class="card">
             <div class="form-row text-center">
                 <div class="form-col">
-                    <img src="img/icon-newyork.png" alt="Нью-Йорк" style="width: 36px; margin-bottom: 10px;">
+                    <img src="img/icon-newyork.png" alt="Нью-Йорк" class="destination-icon-img">
                     <h3>Нью-Йорк</h3>
                     <p>от 25 000 ₽</p>
                 </div>
                 <div class="form-col">
-                    <img src="img/icon-paris.png" alt="Париж" style="width: 36px; margin-bottom: 10px;">
+                    <img src="img/icon-paris.png" alt="Париж" class="destination-icon-img">
                     <h3>Париж</h3>
                     <p>от 18 000 ₽</p>
                 </div>
                 <div class="form-col">
-                    <img src="img/icon-tokyo.png" alt="Токио" style="width: 36px; margin-bottom: 10px;">
+                    <img src="img/icon-tokyo.png" alt="Токио" class="destination-icon-img">
                     <h3>Токио</h3>
                     <p>от 35 000 ₽</p>
                 </div>
                 <div class="form-col">
-                    <img src="img/icon-dubai.png" alt="Дубай" style="width: 36px; margin-bottom: 10px;">
+                    <img src="img/icon-dubai.png" alt="Дубай" class="destination-icon-img">
                     <h3>Дубай</h3>
                     <p>от 22 000 ₽</p>
                 </div>
             </div>
         </div>
 
-        <!-- СЛАЙДЕР (как на скрине) -->
+        <!-- СЛАЙДЕР -->
         <div class="slider-wrapper">
             <input type="radio" name="slider" id="s1" checked>
             <input type="radio" name="slider" id="s2">
@@ -156,35 +156,35 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <input type="radio" name="slider" id="s5">
 
             <div class="slider-track">
-                <div class="slide" style="background-image: 'img/slide1.jpg';">
+                <div class="slide slide-1">
                     <div class="slide-content">
                         <h2>Летайте с комфортом</h2>
                         <p>Лучшие цены на авиабилеты по всему миру. Быстрое бронирование и надёжное обслуживание с 2013 года.</p>
                         <a href="flights.php" class="btn">Найти рейсы</a>
                     </div>
                 </div>
-                <div class="slide" style="background-image: 'img/slide2.jpg';">
+                <div class="slide slide-2">
                     <div class="slide-content">
                         <h2>Откройте новые горизонты</h2>
                         <p>Более 150 направлений полетов. Отпуск мечты начинается здесь.</p>
                         <a href="flights.php" class="btn btn-secondary">Бизнес-класс</a>
                     </div>
                 </div>
-                <div class="slide" style="background-image: 'img/slide3.jpg';">
+                <div class="slide slide-3">
                     <div class="slide-content">
                         <h2>Мы заботимся о вас</h2>
                         <p>Поддержка 24/7 и безопасная оплата на всех этапах путешествия.</p>
                         <a href="about.php" class="btn">Узнать больше</a>
                     </div>
                 </div>
-                <div class="slide" style="background-image: 'img/slide4.jpg';">
+                <div class="slide slide-4">
                     <div class="slide-content">
                         <h2>Удобное бронирование</h2>
                         <p>Купите билет в пару кликов прямо с телефона.</p>
                         <a href="reg.php" class="btn">Регистрация</a>
                     </div>
                 </div>
-                <div class="slide" style="background-image: 'img/slide5.jpg';">
+                <div class="slide slide-5">
                     <div class="slide-content">
                         <h2>Надежный партнер</h2>
                         <p>Работаем с 2013 года.</p>
@@ -245,5 +245,15 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </div>
         <div class="copyright">&copy; 2013-2026 AirClick. Все права защищены.</div>
     </footer>
+
+    <script>
+        // Установка минимальной даты (сегодня)
+        const dateInput = document.getElementById('depDate');
+        if (dateInput) {
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.min = today;
+            dateInput.value = today;
+        }
+    </script>
 </body>
 </html>

@@ -11,7 +11,7 @@ CREATE TABLE users (
     phone       VARCHAR(15)  NOT NULL,
     email       VARCHAR(255) NOT NULL UNIQUE,
     passport    VARCHAR(30)  NULL,
-    birth_date  DATE         NULL;
+    birth_date  DATE         NULL,
     gender      ENUM('male','female') NULL,
     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     INDEX idx_login (login),

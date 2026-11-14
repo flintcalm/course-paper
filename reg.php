@@ -18,31 +18,30 @@ unset($_SESSION['reg_errors'], $_SESSION['reg_old']);
 <body>
     <header>
         <a href="index.php" class="logo">
-            <img src="img/logo-plane.png" alt="AirClick" class="logo-img">
+            <img src="img/logo-plane.png" alt="AirClick">
             <span>Air</span><span>Click</span>
         </a>
         <nav>
             <ul>
-                <li><a href="index.php" class="<?= $current_page == 'index.php' ? 'active' : '' ?>">Главная</a></li>
-                <li><a href="flights.php" class="<?= $current_page == 'flights.php' ? 'active' : '' ?>">Рейсы</a></li>
-                <li><a href="about.php" class="<?= $current_page == 'about.php' ? 'active' : '' ?>">О компании</a></li>
-                <li><a href="contacts.php" class="<?= $current_page == 'contacts.php' ? 'active' : '' ?>">Контакты</a></li>
-                
+                <li><a href="index.php">Главная</a></li>
+                <li><a href="flights.php">Рейсы</a></li>
+                <li><a href="about.php">О компании</a></li>
+                <li><a href="contacts.php">Контакты</a></li>
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <li class="nav-dropdown">
-                        <a href="#" class="nav-dropbtn">Личный кабинет ▼</a>
+                        <a href="#">Личный кабинет ▼</a>
                         <div class="nav-dropdown-content">
                             <a href="profile.php">Профиль</a>
                             <a href="my-bookings.php">Мои бронирования</a>
-                            <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
-                                <a href="admin.php" style="color: #ff4081; font-weight: bold;">Админ-панель</a>
+                            <?php if ($_SESSION['user_role'] === 'admin'): ?>
+                                <a href="admin.php" style="color: #ff4081;">Админ-панель</a>
                             <?php endif; ?>
                             <a href="php/logout.php">Выход</a>
                         </div>
                     </li>
                 <?php else: ?>
-                    <li><a href="authy.php" class="<?= $current_page == 'authy.php' ? 'active' : '' ?>">Вход</a></li>
-                    <li><a href="reg.php" class="<?= $current_page == 'reg.php' ? 'active' : '' ?>">Регистрация</a></li>
+                    <li><a href="authy.php">Вход</a></li>
+                    <li><a href="reg.php" class="active">Регистрация</a></li>
                 <?php endif; ?>
             </ul>
         </nav>

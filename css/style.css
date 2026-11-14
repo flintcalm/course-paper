@@ -22,7 +22,7 @@ main {
 }
 
 /* ================= УТИЛИТАРНЫЕ КЛАССЫ ================= */
-/* Служат для быстрого изменения отступов и выравнивания без написания лишнего CSS */
+/* для быстрого изменения отступов и выравнивания без лишнего CSS */
 .mt-10 { margin-top: 10px; }
 .mt-15 { margin-top: 15px; }
 .mt-20 { margin-top: 20px; }
@@ -188,7 +188,7 @@ main {
 
 .slider-track {
     display: flex;
-    height: 400px;
+    height: 550px;
     transition: transform 0.5s ease;
 }
 
@@ -221,12 +221,12 @@ main {
 
 .slide-content h2 {
     font-size: 36px;
-    margin-bottom: 15px;
+    margin-bottom: 0px;
 }
 
 .slide-content p {
     font-size: 18px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 /* Стрелки */
@@ -787,10 +787,207 @@ footer {
     text-decoration: none;
 }
 
+/* Блок поиска на главной */
+.hero-search {
+    background: #283593;
+    padding: 60px 20px;
+    border-radius: 8px;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 40px;
+}
+
+.hero-search h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.hero-search > p {
+    margin-bottom: 30px;
+}
+
+.search-form-card {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: left;
+    background: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.08);
+}
+
+.search-form-card h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #1a237e;
+}
+
+/* Иконки преимуществ */
+.feature-icon-img {
+    width: 48px;
+    margin-bottom: 15px;
+}
+
+/* Иконки направлений */
+.destination-icon-img {
+    width: 36px;
+    margin-bottom: 10px;
+}
+
+/* Картинки для слайдера */
+.slide-1 { background-image: url('../img/slide1.jpg'); }
+.slide-2 { background-image: url('../img/slide2.jpg'); }
+.slide-3 { background-image: url('../img/slide3.jpg'); }
+.slide-4 { background-image: url('../img/slide4.jpg'); }
+.slide-5 { background-image: url('../img/slide5.jpg'); }
+
+/* Обертка для кнопки "Найти" в форме поиска */
+.search-btn-wrapper {
+    display: flex;
+    align-items: flex-end;
+    height: 100%;
+}
+
+.search-btn-wrapper .btn {
+    margin-bottom: 15px; /* Выравнивание кнопки с полями ввода */
+}
+
+.align-center {
+    align-items: center;
+}
+
+.about-plane-img {
+    width: 120px;
+}
+
+.advantage-card {
+    background: #f5f7fa;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.advantage-icon-img {
+    width: 36px;
+    margin-bottom: 10px;
+}
+
+/* Картинки для слайдера на странице "О компании" */
+.slide-6 { background-image: url('../img/slide6.jpg'); }
+.slide-7 { background-image: url('../img/slide7.jpg'); }
+.slide-8 { background-image: url('../img/slide8.jpg'); }
+.slide-9 { background-image: url('../img/slide9.jpg'); }
+.slide-10 {background-image: url('../img/slide10.jpg');}
+
+.table-scrollable {
+    max-height: 600px; /* Высота, после которой появится скролл */
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+/* ================= АДМИН-ПАНЕЛЬ ДОПОЛНЕНИЯ ================= */
+.filter-label {
+    display: block;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.filter-label-bold {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.form-col-auto {
+    flex: 0 0 auto;
+}
+
+.align-end {
+    align-items: flex-end;
+}
+
+/* Обертка для блоков фильтров и сортировки */
+.filters-wrapper {
+    background: #f5f7fa;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+/* Сетка для 4-х сортировок */
+.sort-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+/* Стили для инпутов и селектов внутри админ-фильтров */
+.filters-wrapper select,
+.filters-wrapper input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.filters-wrapper select:focus {
+    outline: none;
+    border-color: #00b0ff;
+}
+
+/* Цвета кнопок, которых не было в основном CSS */
+.btn-dark {
+    background: #333;
+}
+.btn-dark:hover {
+    background: #111;
+}
+
+.text-pink {
+    color: #ff4081 !important;
+}
+
+.ml-10 {
+    margin-left: 10px;
+}
+
+/* Действия в таблице рейсов */
+.actions-cell {
+    display: flex;
+    gap: 5px;
+}
+
+.mb-0 {
+    margin-bottom: 0;
+}
+
+.align-end {
+    align-items: flex-end;
+}
+
+/* Делаем так, чтобы селект в админке выглядел как обычный инпут */
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #fff;
+    transition: border-color .3s;
+}
+
+.form-group select:focus {
+    outline: none;
+    border-color: #00b0ff;
+}
+
 /* ================= АДАПТИВНОСТЬ ================= */
 @media (max-width: 900px) {
     .search-grid,
-    .filter-grid {
+    .filter-grid,
+    .sort-grid {
         grid-template-columns: 1fr 1fr;
     }
 }
@@ -808,7 +1005,7 @@ footer {
     }
 
     .slider-track {
-        height: 300px;
+        height: 350px;
     }
 
     .slide-content {
@@ -818,7 +1015,7 @@ footer {
     }
 
     .slider-btn {
-        display: none !important;
+        display: none;
     }
 
     .admin-form-grid {
@@ -828,7 +1025,8 @@ footer {
 
 @media (max-width: 600px) {
     .search-grid,
-    .filter-grid {
+    .filter-grid,
+    .sort-grid {
         grid-template-columns: 1fr;
     }
 

@@ -28,6 +28,9 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                         <div class="nav-dropdown-content">
                             <a href="profile.php">Профиль</a>
                             <a href="my-bookings.php">Мои бронирования</a>
+                            <?php if ($_SESSION['user_role'] === 'admin'): ?>
+                                <a href="admin.php" style="color: #ff4081;">Админ-панель</a>
+                            <?php endif; ?>
                             <a href="php/logout.php">Выход</a>
                         </div>
                     </li>

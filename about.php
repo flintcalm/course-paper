@@ -28,6 +28,9 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                         <div class="nav-dropdown-content">
                             <a href="profile.php">Профиль</a>
                             <a href="my-bookings.php">Мои бронирования</a>
+                            <?php if ($_SESSION['user_role'] === 'admin'): ?>
+                                <a href="admin.php" style="color: #ff4081;">Админ-панель</a>
+                            <?php endif; ?>
                             <a href="php/logout.php">Выход</a>
                         </div>
                     </li>
@@ -43,31 +46,31 @@ if (session_status() === PHP_SESSION_NONE) session_start();
         <h1 class="page-title">О компании AirClick</h1>
 
         <div class="card">
-            <div class="form-row mb-20" style="align-items: center;">
+            <div class="form-row mb-20 align-center">
                 <div class="form-col">
                     <h2 class="mb-10">Наша миссия</h2>
                     <p class="mb-10">AirClick был основан в 2013 году с целью сделать бронирование авиабилетов простым, быстрым и доступным для каждого. Мы верим, что путешествия должны быть вдохновляющими, а не сложными.</p>
                     <p>Наша миссия — предоставить клиентам лучший сервис по поиску и бронированию авиабилетов, сочетающий в себе современные технологии, выгодные цены и персонализированный подход.</p>
                 </div>
                 <div class="form-col text-center">
-                    <img src="img/icon-plane-large.png" alt="Самолёт" style="width: 120px;">
+                    <img src="img/icon-plane-large.png" alt="Самолёт" class="about-plane-img">
                 </div>
             </div>
 
             <h2 class="mb-20">Наши преимущества</h2>
             <div class="form-row">
-                <div class="form-col card" style="background: #f5f7fa; box-shadow: none; padding: 20px;">
-                    <img src="img/icon-money.png" alt="Цены" style="width: 36px; margin-bottom: 10px;">
+                <div class="form-col advantage-card">
+                    <img src="img/icon-money.png" alt="Цены" class="advantage-icon-img">
                     <h3 class="mb-10">Лучшие цены</h3>
                     <p class="text-muted">Мы сравниваем цены сотен авиакомпаний и находим для вас самые выгодные предложения.</p>
                 </div>
-                <div class="form-col card" style="background: #f5f7fa; box-shadow: none; padding: 20px;">
-                    <img src="img/icon-shield.png" alt="Безопасность" style="width: 36px; margin-bottom: 10px;">
+                <div class="form-col advantage-card">
+                    <img src="img/icon-shield.png" alt="Безопасность" class="advantage-icon-img">
                     <h3 class="mb-10">Безопасность</h3>
                     <p class="text-muted">Все транзакции защищены с использованием современных технологий шифрования данных.</p>
                 </div>
-                <div class="form-col card" style="background: #f5f7fa; box-shadow: none; padding: 20px;">
-                    <img src="img/icon-support.png" alt="Поддержка" style="width: 36px; margin-bottom: 10px;">
+                <div class="form-col advantage-card">
+                    <img src="img/icon-support.png" alt="Поддержка" class="advantage-icon-img">
                     <h3 class="mb-10">Поддержка 24/7</h3>
                     <p class="text-muted">Наша служба поддержки работает круглосуточно, чтобы помочь вам в любой ситуации.</p>
                 </div>
@@ -87,7 +90,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
             </div>
         </div>
 
-        <!-- НОВЫЙ СЛАЙДЕР ДЛЯ О КОМПАНИИ -->
+        <!-- СЛАЙДЕР ДЛЯ О КОМПАНИИ -->
         <div class="slider-wrapper">
             <input type="radio" name="slider" id="s1" checked>
             <input type="radio" name="slider" id="s2">
@@ -96,31 +99,31 @@ if (session_status() === PHP_SESSION_NONE) session_start();
             <input type="radio" name="slider" id="s5">
 
             <div class="slider-track">
-                <div class="slide" style="background-image: 'img/slide6.jpg';">
+                <div class="slide slide-6">
                     <div class="slide-content">
                         <h2>Наша миссия</h2>
                         <p>Делаем путешествия простыми, доступными и вдохновляющими для каждого.</p>
                     </div>
                 </div>
-                <div class="slide" style="background-image: 'img/slide7.jpg';">
+                <div class="slide slide-7">
                     <div class="slide-content">
                         <h2>Наши ценности</h2>
                         <p>Безопасность, комфорт и честные цены — превыше всего.</p>
                     </div>
                 </div>
-                <div class="slide" style="background-image: 'img/slide8.jpg';">
+                <div class="slide slide-8">
                     <div class="slide-content">
                         <h2>Наш флот</h2>
                         <p>Сотрудничаем только с проверенными авиакомпаниями и современными лайнерами.</p>
                     </div>
                 </div>
-                <div class="slide" style="background-image: 'img/slide9.jpg';">
+                <div class="slide slide-9">
                     <div class="slide-content">
                         <h2>Наши партнеры</h2>
                         <p>Более 20 ведущих авиакомпаний мира доверяют нам своих пассажиров.</p>
                     </div>
                 </div>
-                <div class="slide" style="background-image: 'img/slide10.jpg';">
+                <div class="slide slide-10">
                     <div class="slide-content">
                         <h2>Наше будущее</h2>
                         <p>Постоянно внедряем новые технологии для вашего максимального удобства.</p>
