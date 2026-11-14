@@ -30,6 +30,28 @@ $birth_date = $_POST['birth_date'];
 $gender     = $_POST['gender'];
 $document   = trim($_POST['document']);
 
+// 1.5. ПРОВЕРКА НАЛИЧИЯ МЕСТ
+$limits = ['economy' => 50, 'business' => 20, 'first' => 5];
+$max_seats = $limits[$class] ?? 50;
+
+$stmt_check = mysqli_prepare($connect, "
+    SELECT COUNT(*) as booked
+    FROM passengers p
+    JOIN bookings b ON p.booking_id = b.id
+    WHERE b.flight_id = ? AND b.class = ? AND b.departure_date = ? AND b.status IN ('active', 'confirmed')
+");
+mysqli_stmt_bind_param($stmt_check, 'iss', $flight_id, $class, $departure_date);
+mysqli_stmt_execute($stmt_check);
+$res_check = mysqli_stmt_get_result($stmt_check);
+$row_check = mysqli_fetch_assoc($res_check);
+mysqli_stmt_close($stmt_check);
+
+if ($row_check['booked'] >= $max_seats) {
+    $_SESSION['booking_error'] = 'К сожалению, на этот рейс только что закончились места в выбранном классе.';
+    header('Location: ../booking.php?flight_id=' . $flight_id . '&class=' . $class . '&departure=' . $departure_date);
+    exit;
+}
+
 // 2. Генерируем уникальный код бронирования (например, AC-A1B2C3)
 $code = 'AC-' . strtoupper(bin2hex(random_bytes(3)));
 

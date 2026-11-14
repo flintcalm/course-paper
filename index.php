@@ -1,7 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+if (session_status() === PHP_SESSION_NONE) session_start();
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
 <!DOCTYPE html>
@@ -16,170 +14,206 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <body>
     <header>
         <a href="index.php" class="logo">
-            <img src="img/logo-plane.png" alt="AirClick" class="logo-img">
+            <img src="img/logo-plane.png" alt="AirClick">
             <span>Air</span><span>Click</span>
         </a>
         <nav>
             <ul>
-                <li><a href="index.php" class="<?= $current_page == 'index.php' ? 'active' : '' ?>">Главная</a></li>
-                <li><a href="flights.php" class="<?= $current_page == 'flights.php' ? 'active' : '' ?>">Рейсы</a></li>
-                
-                <!-- Показываем эти пункты ТОЛЬКО если пользователь авторизован -->
+                <li><a href="index.php" class="active">Главная</a></li>
+                <li><a href="flights.php">Рейсы</a></li>
+                <li><a href="about.php">О компании</a></li>
+                <li><a href="contacts.php">Контакты</a></li>
                 <?php if (isset($_SESSION['user_id'])): ?>
-                    <li><a href="booking.php" class="<?= $current_page == 'booking.php' ? 'active' : '' ?>">Бронирование</a></li>
-                    <li><a href="my-bookings.php" class="<?= $current_page == 'my-bookings.php' ? 'active' : '' ?>">Мои бронирования</a></li>
-                <?php endif; ?>
-
-                <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
-                    <li><a href="admin.php" class="<?= $current_page == 'admin.php' ? 'active' : '' ?>" style="color: #ff4081; font-weight: bold;">Админ-панель</a></li>
-                <?php endif; ?>
-                
-                <li><a href="about.php" class="<?= $current_page == 'about.php' ? 'active' : '' ?>">О компании</a></li>
-                <li><a href="contacts.php" class="<?= $current_page == 'contacts.php' ? 'active' : '' ?>">Контакты</a></li>
-                
-                <!-- Блок авторизации -->
-                <?php if (isset($_SESSION['user_id'])): ?>
-                    <li><a href="php/logout.php">Выход (<?= htmlspecialchars($_SESSION['user_name'] ?? '') ?>)</a></li>
+                    <li class="nav-dropdown">
+                        <a href="#">Личный кабинет ▼</a>
+                        <div class="nav-dropdown-content">
+                            <a href="profile.php">Профиль</a>
+                            <a href="my-bookings.php">Мои бронирования</a>
+                            <?php if ($_SESSION['user_role'] === 'admin'): ?>
+                                <a href="admin.php" style="color: #ff4081;">Админ-панель</a>
+                            <?php endif; ?>
+                            <a href="php/logout.php">Выход</a>
+                        </div>
+                    </li>
                 <?php else: ?>
-                    <li><a href="authy.php" class="<?= $current_page == 'authy.php' ? 'active' : '' ?>">Вход</a></li>
-                    <li><a href="reg.php" class="<?= $current_page == 'reg.php' ? 'active' : '' ?>">Регистрация</a></li>
+                    <li><a href="authy.php">Вход</a></li>
+                    <li><a href="reg.php">Регистрация</a></li>
                 <?php endif; ?>
             </ul>
         </nav>
     </header>
 
     <main>
-        <section class="hero">
-            <h1>Путешествуйте с комфортом</h1>
-            <p>AirClick предлагает лучшие цены на авиабилеты по всему миру. Быстрое бронирование, удобный поиск и надёжное обслуживание с 2013 года.</p>
-
-            <div class="search-form">
-                <h2 class="search-title">Найти рейсы</h2>
-                <form action="flights.php" method="GET">
-                    <div class="search-row">
+        <!-- HERO-БЛОК С ПОИСКОМ -->
+        <div style="background: #283593; padding: 60px 20px; border-radius: 8px; text-align: center; color: #fff; margin-bottom: 40px;">
+            <h1 style="font-size: 36px; margin-bottom: 10px;">Путешествуйте с комфортом</h1>
+            <p style="margin-bottom: 30px;">AirClick предлагает лучшие цены на авиабилеты по всему миру. Быстрое бронирование, удобный поиск и надёжное обслуживание с 2013 года.</p>
+            
+            <div class="card" style="max-width: 900px; margin: 0 auto; text-align: left;">
+                <h3 class="text-center mb-20" style="color: #1a237e;">Найти рейсы</h3>
+                <form action="flights.php" method="GET" class="form-row">
+                    <div class="form-col">
                         <div class="form-group">
-                            <label for="from">Откуда</label>
-                            <select id="from" name="from">
+                            <label>Откуда</label>
+                            <select name="from">
                                 <option value="">Выберите город вылета</option>
                                 <option value="Москва">Москва</option>
                                 <option value="Санкт-Петербург">Санкт-Петербург</option>
                                 <option value="Сочи">Сочи</option>
                                 <option value="Париж">Париж</option>
-                                <option value="Нью-Йорк">Нью-Йорк</option>
-                                <option value="Токио">Токио</option>
-                                <option value="Дубай">Дубай</option>
-                                <option value="Лондон">Лондон</option>
-                                <option value="Рим">Рим</option>
-                                <option value="Пекин">Пекин</option>
-                                <option value="Стамбул">Стамбул</option>
-                                <option value="Бангкок">Бангкок</option>
-                                <option value="Анталья">Анталья</option>
-                                <option value="Казань">Казань</option>
-                                <option value="Екатеринбург">Екатеринбург</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="form-col">
                         <div class="form-group">
-                            <label for="to">Куда</label>
-                            <select id="to" name="to">
+                            <label>Куда</label>
+                            <select name="to">
                                 <option value="">Выберите город назначения</option>
                                 <option value="Москва">Москва</option>
                                 <option value="Санкт-Петербург">Санкт-Петербург</option>
                                 <option value="Сочи">Сочи</option>
                                 <option value="Париж">Париж</option>
-                                <option value="Нью-Йорк">Нью-Йорк</option>
-                                <option value="Токио">Токио</option>
-                                <option value="Дубай">Дубай</option>
-                                <option value="Лондон">Лондон</option>
-                                <option value="Рим">Рим</option>
-                                <option value="Пекин">Пекин</option>
-                                <option value="Стамбул">Стамбул</option>
-                                <option value="Бангкок">Бангкок</option>
-                                <option value="Анталья">Анталья</option>
-                                <option value="Казань">Казань</option>
-                                <option value="Екатеринбург">Екатеринбург</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="form-col">
                         <div class="form-group">
-                            <label for="departure">Дата вылета</label>
-                            <input type="date" id="departure" name="departure" required>
+                            <label>Дата вылета</label>
+                            <input type="date" name="departure" id="depDate" required>
                         </div>
                     </div>
-                    <div class="search-row">
+                </form>
+                <form action="flights.php" method="GET" class="form-row mt-10">
+                    <div class="form-col">
                         <div class="form-group">
-                            <label for="class">Класс</label>
-                            <select id="class" name="class">
+                            <label>Класс</label>
+                            <select name="class">
                                 <option value="economy">Эконом</option>
                                 <option value="business">Бизнес</option>
                                 <option value="first">Первый класс</option>
                             </select>
                         </div>
-                        <div class="form-group form-group-submit">
-                            <button type="submit" class="btn btn-block">Найти рейсы</button>
-                        </div>
+                    </div>
+                    <div class="form-col" style="display: flex; align-items: flex-end;">
+                        <button type="submit" class="btn btn-block mb-10">Найти рейсы</button>
                     </div>
                 </form>
             </div>
-        </section>
+        </div>
 
-        <section class="features">
-            <div class="feature">
-                <div class="feature-icon">
-                    <img src="img/icon-search.png" alt="Быстрый поиск">
-                </div>
+        <!-- ПРЕИМУЩЕСТВА -->
+        <div class="form-row text-center mb-20">
+            <div class="form-col">
+                <img src="img/icon-search.png" alt="Поиск" style="width: 48px; margin-bottom: 15px;">
                 <h3>Быстрый поиск</h3>
-                <p>Находите лучшие рейсы по выгодным ценам среди сотен авиакомпаний</p>
+                <p class="text-muted">Находите лучшие рейсы по выгодным ценам среди сотен авиакомпаний</p>
             </div>
-            <div class="feature">
-                <div class="feature-icon">
-                    <img src="img/icon-shield.png" alt="Безопасная оплата">
-                </div>
+            <div class="form-col">
+                <img src="img/icon-shield.png" alt="Безопасность" style="width: 48px; margin-bottom: 15px;">
                 <h3>Безопасная оплата</h3>
-                <p>Все платежи защищены с использованием современных технологий шифрования</p>
+                <p class="text-muted">Все платежи защищены с использованием современных технологий шифрования</p>
             </div>
-            <div class="feature">
-                <div class="feature-icon">
-                    <img src="img/icon-support.png" alt="Поддержка 24/7">
-                </div>
+            <div class="form-col">
+                <img src="img/icon-support.png" alt="Поддержка" style="width: 48px; margin-bottom: 15px;">
                 <h3>Поддержка 24/7</h3>
-                <p>Наша служба поддержки готова помочь вам в любое время дня и ночи</p>
+                <p class="text-muted">Наша служба поддержки готова помочь вам в любое время дня и ночи</p>
             </div>
-        </section>
+        </div>
 
-        <section class="popular-destinations">
-            <h2 class="page-title">Популярные направления</h2>
-            <div class="card">
-                <div class="destinations-row">
-                    <div class="destination-card">
-                        <div class="destination-icon">
-                            <img src="img/icon-newyork.png" alt="Нью-Йорк">
-                        </div>
-                        <h3>Нью-Йорк</h3>
-                        <p>от 25 000 ₽</p>
+        <!-- ПОПУЛЯРНЫЕ НАПРАВЛЕНИЯ -->
+        <h2 class="page-title mt-20">Популярные направления</h2>
+        <div class="card">
+            <div class="form-row text-center">
+                <div class="form-col">
+                    <img src="img/icon-newyork.png" alt="Нью-Йорк" style="width: 36px; margin-bottom: 10px;">
+                    <h3>Нью-Йорк</h3>
+                    <p>от 25 000 ₽</p>
+                </div>
+                <div class="form-col">
+                    <img src="img/icon-paris.png" alt="Париж" style="width: 36px; margin-bottom: 10px;">
+                    <h3>Париж</h3>
+                    <p>от 18 000 ₽</p>
+                </div>
+                <div class="form-col">
+                    <img src="img/icon-tokyo.png" alt="Токио" style="width: 36px; margin-bottom: 10px;">
+                    <h3>Токио</h3>
+                    <p>от 35 000 ₽</p>
+                </div>
+                <div class="form-col">
+                    <img src="img/icon-dubai.png" alt="Дубай" style="width: 36px; margin-bottom: 10px;">
+                    <h3>Дубай</h3>
+                    <p>от 22 000 ₽</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- СЛАЙДЕР (как на скрине) -->
+        <div class="slider-wrapper">
+            <input type="radio" name="slider" id="s1" checked>
+            <input type="radio" name="slider" id="s2">
+            <input type="radio" name="slider" id="s3">
+            <input type="radio" name="slider" id="s4">
+            <input type="radio" name="slider" id="s5">
+
+            <div class="slider-track">
+                <div class="slide" style="background-image: 'img/slide1.jpg';">
+                    <div class="slide-content">
+                        <h2>Летайте с комфортом</h2>
+                        <p>Лучшие цены на авиабилеты по всему миру. Быстрое бронирование и надёжное обслуживание с 2013 года.</p>
+                        <a href="flights.php" class="btn">Найти рейсы</a>
                     </div>
-                    <div class="destination-card">
-                        <div class="destination-icon">
-                            <img src="img/icon-paris.png" alt="Париж">
-                        </div>
-                        <h3>Париж</h3>
-                        <p>от 18 000 ₽</p>
+                </div>
+                <div class="slide" style="background-image: 'img/slide2.jpg';">
+                    <div class="slide-content">
+                        <h2>Откройте новые горизонты</h2>
+                        <p>Более 150 направлений полетов. Отпуск мечты начинается здесь.</p>
+                        <a href="flights.php" class="btn btn-secondary">Бизнес-класс</a>
                     </div>
-                    <div class="destination-card">
-                        <div class="destination-icon">
-                            <img src="img/icon-tokyo.png" alt="Токио">
-                        </div>
-                        <h3>Токио</h3>
-                        <p>от 35 000 ₽</p>
+                </div>
+                <div class="slide" style="background-image: 'img/slide3.jpg';">
+                    <div class="slide-content">
+                        <h2>Мы заботимся о вас</h2>
+                        <p>Поддержка 24/7 и безопасная оплата на всех этапах путешествия.</p>
+                        <a href="about.php" class="btn">Узнать больше</a>
                     </div>
-                    <div class="destination-card">
-                        <div class="destination-icon">
-                            <img src="img/icon-dubai.png" alt="Дубай">
-                        </div>
-                        <h3>Дубай</h3>
-                        <p>от 22 000 ₽</p>
+                </div>
+                <div class="slide" style="background-image: 'img/slide4.jpg';">
+                    <div class="slide-content">
+                        <h2>Удобное бронирование</h2>
+                        <p>Купите билет в пару кликов прямо с телефона.</p>
+                        <a href="reg.php" class="btn">Регистрация</a>
+                    </div>
+                </div>
+                <div class="slide" style="background-image: 'img/slide5.jpg';">
+                    <div class="slide-content">
+                        <h2>Надежный партнер</h2>
+                        <p>Работаем с 2013 года.</p>
+                        <a href="about.php" class="btn">О компании</a>
                     </div>
                 </div>
             </div>
-        </section>
+
+            <div class="controls">
+                <label for="s5" class="slider-btn prev b1">❮</label>
+                <label for="s2" class="slider-btn next b1">❯</label>
+                <label for="s1" class="slider-btn prev b2">❮</label>
+                <label for="s3" class="slider-btn next b2">❯</label>
+                <label for="s2" class="slider-btn prev b3">❮</label>
+                <label for="s4" class="slider-btn next b3">❯</label>
+                <label for="s3" class="slider-btn prev b4">❮</label>
+                <label for="s5" class="slider-btn next b4">❯</label>
+                <label for="s4" class="slider-btn prev b5">❮</label>
+                <label for="s1" class="slider-btn next b5">❯</label>
+
+                <div class="slider-dots">
+                    <label for="s1" class="dot d1"></label>
+                    <label for="s2" class="dot d2"></label>
+                    <label for="s3" class="dot d3"></label>
+                    <label for="s4" class="dot d4"></label>
+                    <label for="s5" class="dot d5"></label>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer>
@@ -192,42 +226,24 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <ul>
                 <li><a href="index.php">Главная</a></li>
                 <li><a href="flights.php">Рейсы</a></li>
-                <?php if (isset($_SESSION['user_id'])): ?>
-                    <li><a href="my-bookings.php">Мои бронирования</a></li>
-                <?php endif; ?>
+                <li><a href="my-bookings.php">Мои бронирования</a></li>
                 <li><a href="about.php">О компании</a></li>
                 <li><a href="contacts.php">Контакты</a></li>
             </ul>
         </div>
         <div class="footer-section">
             <h3>Контакты</h3>
-            <div class="">
-                <div class="contact-info">
-                    <span><img src="img/icon-phone.png" alt="Телефон" class="footer-icon"></span>
-                    +7 (495) 123-45-67
-                </div>
-                <div class="contact-info">
-                    <span><img src="img/icon-email.png" alt="Email" class="footer-icon"></span>
-                    info@airclick.ru
-                </div>
-                <div class="contact-info">
-                    <span><img src="img/icon-location.png" alt="Адрес" class="footer-icon"></span>
-                    Москва, ул. Авиаторов, 15
-                </div>
+            <div class="contact-info">
+                <img src="img/icon-phone.png" class="footer-icon" alt="Тел"> +7 (495) 123-45-67
+            </div>
+            <div class="contact-info">
+                <img src="img/icon-email.png" class="footer-icon" alt="Email"> info@airclick.ru
+            </div>
+            <div class="contact-info">
+                <img src="img/icon-location.png" class="footer-icon" alt="Адрес"> Москва, ул. Авиаторов, 15
             </div>
         </div>
-        <div class="copyright">
-            <p>&copy; 2013-2026 AirClick. Все права защищены.</p>
-        </div>
+        <div class="copyright">&copy; 2013-2026 AirClick. Все права защищены.</div>
     </footer>
-
-    <script>
-        const today = new Date().toISOString().split('T')[0];
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 7);
-        const nextWeek = tomorrow.toISOString().split('T')[0];
-        document.getElementById('departure').value = today;
-        document.getElementById('departure').min = today;
-    </script>
 </body>
 </html>

@@ -29,23 +29,21 @@ unset($_SESSION['authy_error']);
             <ul>
                 <li><a href="index.php" class="<?= $current_page == 'index.php' ? 'active' : '' ?>">Главная</a></li>
                 <li><a href="flights.php" class="<?= $current_page == 'flights.php' ? 'active' : '' ?>">Рейсы</a></li>
-                
-                <!-- Показываем эти пункты ТОЛЬКО если пользователь авторизован -->
-                <?php if (isset($_SESSION['user_id'])): ?>
-                    <li><a href="booking.php" class="<?= $current_page == 'booking.php' ? 'active' : '' ?>">Бронирование</a></li>
-                    <li><a href="my-bookings.php" class="<?= $current_page == 'my-bookings.php' ? 'active' : '' ?>">Мои бронирования</a></li>
-                <?php endif; ?>
-                
-                <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
-                    <li><a href="admin.php" class="<?= $current_page == 'admin.php' ? 'active' : '' ?>" style="color: #ff4081; font-weight: bold;">Админ-панель</a></li>
-                <?php endif; ?>
-                
                 <li><a href="about.php" class="<?= $current_page == 'about.php' ? 'active' : '' ?>">О компании</a></li>
                 <li><a href="contacts.php" class="<?= $current_page == 'contacts.php' ? 'active' : '' ?>">Контакты</a></li>
                 
-                <!-- Блок авторизации -->
                 <?php if (isset($_SESSION['user_id'])): ?>
-                    <li><a href="php/logout.php">Выход (<?= htmlspecialchars($_SESSION['user_name'] ?? '') ?>)</a></li>
+                    <li class="nav-dropdown">
+                        <a href="#" class="nav-dropbtn">Личный кабинет ▼</a>
+                        <div class="nav-dropdown-content">
+                            <a href="profile.php">Профиль</a>
+                            <a href="my-bookings.php">Мои бронирования</a>
+                            <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
+                                <a href="admin.php" style="color: #ff4081; font-weight: bold;">Админ-панель</a>
+                            <?php endif; ?>
+                            <a href="php/logout.php">Выход</a>
+                        </div>
+                    </li>
                 <?php else: ?>
                     <li><a href="authy.php" class="<?= $current_page == 'authy.php' ? 'active' : '' ?>">Вход</a></li>
                     <li><a href="reg.php" class="<?= $current_page == 'reg.php' ? 'active' : '' ?>">Регистрация</a></li>

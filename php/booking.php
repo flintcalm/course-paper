@@ -16,7 +16,7 @@ $class = $_GET['class'] ?? 'economy';
 $departure_date = $_GET['departure'] ?? date('Y-m-d'); // Если даты нет, ставим сегодня
 
 // 3. Получаем данные пользователя из БД
-$stmt = mysqli_prepare($connect, "SELECT surname, name, patronymic, phone, email, gender FROM users WHERE id = ?");
+$stmt = mysqli_prepare($connect, "SELECT surname, name, patronymic, phone, email, gender, birth_date, passport FROM users WHERE id = ?");
 mysqli_stmt_bind_param($stmt, 'i', $_SESSION['user_id']);
 mysqli_stmt_execute($stmt);
 $user = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
