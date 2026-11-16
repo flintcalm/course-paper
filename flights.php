@@ -27,7 +27,7 @@
                             <a href="profile.php">Профиль</a>
                             <a href="my-bookings.php">Мои бронирования</a>
                             <?php if ($_SESSION['user_role'] === 'admin'): ?>
-                                <a href="admin.php" style="color: #ff4081;">Админ-панель</a>
+                                <a href="admin.php" class="text-pink">Админ-панель</a>
                             <?php endif; ?>
                             <a href="php/logout.php">Выход</a>
                         </div>
@@ -147,7 +147,7 @@
                     <h2>Рейсы не найдены</h2>
                 </div>
             <?php else: ?>
-                <?php foreach ($flights as $f): 
+                <?php foreach ($flights as $f):
                     $max = $limits[$class] ?? 50;
                     $avail = max(0, $max - $f['booked_seats']);
                 ?>
@@ -159,15 +159,15 @@
                                     <div><?= $f['duration'] ?></div>
                                     <div><?= $f['stops'] ?: 'прямой рейс' ?></div>
                                 </div>
-                                <div class="flight-time-value" style="text-align: right;"><?= $f['arrival_time'] ?></div>
+                                <div class="flight-time-value text-right"><?= $f['arrival_time'] ?></div>
                             </div>
                             <div class="flight-cities-row">
                                 <div><?= htmlspecialchars($f['from_city']) ?></div>
-                                <div style="text-align: right;"><?= htmlspecialchars($f['to_city']) ?></div>
+                                <div class="text-right"><?= htmlspecialchars($f['to_city']) ?></div>
                             </div>
                             <div class="flight-meta-row">
                                 <div><?= htmlspecialchars($f['airline']) ?> • <?= htmlspecialchars($f['flight_number']) ?></div>
-                                <div style="text-align: right;">Класс: <?= htmlspecialchars($f['class_name']) ?></div>
+                                <div class="text-right">Класс: <?= htmlspecialchars($f['class_name']) ?></div>
                             </div>
                         </div>
                         <div class="flight-card-right">
@@ -178,7 +178,7 @@
                             <?php if ($avail > 0): ?>
                                 <a href="booking.php?flight_id=<?= $f['id'] ?>&class=<?= urlencode($class) ?>&departure=<?= urlencode($departure) ?>" class="btn w-100">Выбрать</a>
                             <?php else: ?>
-                                <button class="btn w-100" style="background: #ccc; cursor: not-allowed;" disabled>Нет мест</button>
+                                <button class="btn w-100 btn-disabled" disabled>Нет мест</button>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -204,11 +204,11 @@
                 <?php endif; ?>
 
                 <!-- Окно страниц (5 назад, текущая, 5 вперед) -->
-                <?php 
+                <?php
                 $start = max(1, $page - 5);
                 $end = min($total_pages, $page + 5);
                 
-                for ($i = $start; $i <= $end; $i++): 
+                for ($i = $start; $i <= $end; $i++):
                     $queryParams['page'] = $i;
                 ?>
                     <?php if ($i == $page): ?>

@@ -42,7 +42,7 @@
         <div class="card">
             <h2 class="section-title">Управление бронированиями</h2>
             <form method="GET" action="admin.php" class="form-row align-end">
-                <div class="form-col" style="flex: 3;">
+                <div class="form-col flex-3">
                     <div class="form-group mb-0">
                         <label>Пользователь:</label>
                         <select name="user_id" required>
@@ -55,7 +55,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-col" style="flex: 0;">
+                <div class="form-col flex-0">
                     <div class="form-group mb-0">
                         <button type="submit" class="btn">Показать</button>
                     </div>
@@ -79,7 +79,7 @@
                                 <td><?= $b['from_city'] ?> — <?= $b['to_city'] ?></td>
                                 <td><?= date('d.m.Y', strtotime($b['departure_date'])) ?></td>
                                 <td>
-                                    <form action="php/admin_action.php" method="POST">
+                                    <form action="php/admin.php" method="POST">
                                         <input type="hidden" name="action" value="change_status">
                                         <input type="hidden" name="booking_id" value="<?= $b['id'] ?>">
                                         <input type="hidden" name="current_user_id" value="<?= $selected_user_id ?>">
@@ -91,7 +91,7 @@
                                     </form>
                                 </td>
                                 <td>
-                                    <form action="php/admin_action.php" method="POST" onsubmit="return confirm('Удалить?');">
+                                    <form action="php/admin.php" method="POST" onsubmit="return confirm('Удалить?');">
                                         <input type="hidden" name="action" value="delete_booking">
                                         <input type="hidden" name="booking_id" value="<?= $b['id'] ?>">
                                         <input type="hidden" name="current_user_id" value="<?= $selected_user_id ?>">
@@ -119,7 +119,7 @@
                                 <td><?= $b['from_city'] ?> — <?= $b['to_city'] ?></td>
                                 <td><?= date('d.m.Y', strtotime($b['departure_date'])) ?></td>
                                 <td>
-                                    <form action="php/admin_action.php" method="POST">
+                                    <form action="php/admin.php" method="POST">
                                         <input type="hidden" name="action" value="change_status">
                                         <input type="hidden" name="booking_id" value="<?= $b['id'] ?>">
                                         <input type="hidden" name="current_user_id" value="<?= $selected_user_id ?>">
@@ -132,7 +132,7 @@
                                     </form>
                                 </td>
                                 <td>
-                                    <form action="php/admin_action.php" method="POST" onsubmit="return confirm('Удалить?');">
+                                    <form action="php/admin.php" method="POST" onsubmit="return confirm('Удалить?');">
                                         <input type="hidden" name="action" value="delete_booking">
                                         <input type="hidden" name="booking_id" value="<?= $b['id'] ?>">
                                         <input type="hidden" name="current_user_id" value="<?= $selected_user_id ?>">
@@ -162,7 +162,7 @@
                             <td><?= $u['role'] === 'admin' ? '<span class="text-pink">Админ</span>' : 'Юзер' ?></td>
                             <td>
                                 <?php if ($u['id'] != $_SESSION['user_id']): ?>
-                                <form action="php/admin_action.php" method="POST" onsubmit="return confirm('Удалить?');">
+                                <form action="php/admin.php" method="POST" onsubmit="return confirm('Удалить?');">
                                     <input type="hidden" name="action" value="delete_user">
                                     <input type="hidden" name="user_id" value="<?= $u['id'] ?>">
                                     <button type="submit" class="btn btn-dark btn-sm">Удалить</button>
@@ -193,7 +193,7 @@
                             <td><?= htmlspecialchars($m['subject']) ?></td>
                             <td><?= nl2br(htmlspecialchars($m['message'])) ?></td>
                             <td>
-                                <form action="php/admin_action.php" method="POST" onsubmit="return confirm('Удалить?');">
+                                <form action="php/admin.php" method="POST" onsubmit="return confirm('Удалить?');">
                                     <input type="hidden" name="action" value="delete_message">
                                     <input type="hidden" name="message_id" value="<?= $m['id'] ?>">
                                     <button type="submit" class="btn btn-secondary btn-sm">Удалить</button>
@@ -209,7 +209,7 @@
         <!-- Форма рейса -->
         <div class="card">
             <h2 class="section-title"><?= $edit_flight ? 'Редактировать рейс' : 'Добавить новый рейс' ?></h2>
-            <form action="php/admin_action.php" method="POST" class="admin-form-grid">
+            <form action="php/admin.php" method="POST" class="admin-form-grid">
                 <input type="hidden" name="action" value="save_flight">
                 <input type="hidden" name="id" value="<?= $edit_flight['id'] ?? 0 ?>">
                 
@@ -354,7 +354,7 @@
                             <th>Маршрут</th>
                             <th>Время</th>
                             <th>Длительность</th>
-                            <th>Авиакомпания</th> <!-- ДОБАВЛЕНО -->
+                            <th>Авиакомпания</th>
                             <th>Рейс</th>
                             <th>Цена</th>
                             <th>Действия</th>
@@ -362,7 +362,6 @@
                     </thead>
                     <tbody>
                         <?php if (empty($flights)): ?>
-                            <!-- ОБНОВЛЕН COLSPAN C 8 НА 9 -->
                             <tr><td colspan="9" class="text-center">Рейсы по вашему запросу не найдены</td></tr>
                         <?php endif; ?>
                         
@@ -376,13 +375,13 @@
                             <td><?= htmlspecialchars($f['from_city']) ?> — <?= htmlspecialchars($f['to_city']) ?></td>
                             <td><?= $f['departure_time'] ?> - <?= $f['arrival_time'] ?></td>
                             <td><?= htmlspecialchars($f['duration']) ?> / <?= $f['duration_min'] ?>м</td>
-                            <td><?= htmlspecialchars($f['airline']) ?></td> <!-- ДОБАВЛЕНО -->
+                            <td><?= htmlspecialchars($f['airline']) ?></td>
                             <td><?= htmlspecialchars($f['flight_number']) ?></td>
                             <td><?= number_format($f['price'], 0, '', ' ') ?> ₽</td>
                             <td>
                                 <div class="actions-cell">
                                     <a href="admin.php?edit_id=<?= $f['id'] ?>" class="btn btn-sm">✎</a>
-                                    <form action="php/admin_action.php" method="POST" onsubmit="return confirm('Удалить рейс?');">
+                                    <form action="php/admin.php" method="POST" onsubmit="return confirm('Удалить рейс?');">
                                         <input type="hidden" name="action" value="delete_flight">
                                         <input type="hidden" name="flight_id" value="<?= $f['id'] ?>">
                                         <button type="submit" class="btn btn-secondary btn-sm">✖</button>

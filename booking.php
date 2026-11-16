@@ -31,7 +31,7 @@ require_once 'php/booking.php';
                             <a href="profile.php">Профиль</a>
                             <a href="my-bookings.php">Мои бронирования</a>
                             <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
-                                <a href="admin.php" style="color: #ff4081; font-weight: bold;">Админ-панель</a>
+                                <a href="admin.php" class="text-pink">Админ-панель</a>
                             <?php endif; ?>
                             <a href="php/logout.php">Выход</a>
                         </div>
@@ -48,7 +48,7 @@ require_once 'php/booking.php';
         <h1 class="page-title">Бронирование билета</h1>
 
         <?php if (isset($_SESSION['booking_error'])): ?>
-            <div class="authy-error" style="text-align: center; margin-bottom: 20px; font-size: 16px;">
+            <div class="authy-error authy-error-center">
                 <?= htmlspecialchars($_SESSION['booking_error']) ?>
             </div>
             <?php unset($_SESSION['booking_error']); ?>
@@ -62,9 +62,9 @@ require_once 'php/booking.php';
                     <p><strong>Дата:</strong> <?= date('d.m.Y', strtotime($departure_date)) ?> • <?= $flight['departure_time'] ?></p>
                     <p><strong>Рейс:</strong> <?= htmlspecialchars($flight['airline']) ?> (<?= htmlspecialchars($flight['flight_number']) ?>)</p>
                 </div>
-                <div class="flight-info" style="text-align: right;">
-                    <p><strong>Класс:</strong> <span style="color: #00b0ff; font-weight: bold;"><?= htmlspecialchars($flight['class_name']) ?></span></p>
-                    <p><strong>Итоговая цена:</strong> <span style="color: #00b0ff; font-weight: bold; font-size: 20px;"><?= number_format($flight['final_price'], 0, '', ' ') ?> ₽</span></p>
+                <div class="flight-info text-right">
+                    <p><strong>Класс:</strong> <span class="text-highlight"><?= htmlspecialchars($flight['class_name']) ?></span></p>
+                    <p><strong>Итоговая цена:</strong> <span class="text-highlight-large"><?= number_format($flight['final_price'], 0, '', ' ') ?> ₽</span></p>
                 </div>
             </div>
         </div>
@@ -73,7 +73,7 @@ require_once 'php/booking.php';
             <h3 class="section-title">Данные пассажиров</h3>
             
             <!-- Форма будет отправляться на будущий обработчик создания брони -->
-            <form id="booking-form" action="php/create_booking.php" method="POST">
+            <form id="booking-form" action="php/booking.php" method="POST">
                 
                 <!-- Скрытые поля для сервера -->
                 <input type="hidden" name="flight_id" value="<?= htmlspecialchars($flight['id']) ?>">

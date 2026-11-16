@@ -29,7 +29,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                             <a href="profile.php">Профиль</a>
                             <a href="my-bookings.php">Мои бронирования</a>
                             <?php if ($_SESSION['user_role'] === 'admin'): ?>
-                                <a href="admin.php" style="color: #ff4081;">Админ-панель</a>
+                                <a href="admin.php" class="text-pink">Админ-панель</a>
                             <?php endif; ?>
                             <a href="php/logout.php">Выход</a>
                         </div>
@@ -51,31 +51,31 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                 <h2 class="mb-20">Свяжитесь с нами</h2>
                 
                 <div class="contact-info mb-20">
-                    <div style="width: 50px; height: 50px; background: #00b0ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                        <img src="img/i-location.png" alt="Адрес" style="width: 24px;">
+                    <div class="contact-icon-circle">
+                        <img src="img/icon-location.png" alt="Адрес" class="contact-icon-img">
                     </div>
                     <div>
                         <h3>Адрес</h3>
                         <p>Россия, Москва, ул. Авиаторов, 15</p>
-                        <p class="text-muted" style="font-size: 14px;">БЦ "Аэропорт", 5 этаж, офис 512</p>
+                        <p class="text-muted text-sm">БЦ "Аэропорт", 5 этаж, офис 512</p>
                     </div>
                 </div>
 
                 <div class="contact-info mb-20">
-                    <div style="width: 50px; height: 50px; background: #00b0ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                        <img src="img/i-phone.png" alt="Телефон" style="width: 24px;">
+                    <div class="contact-icon-circle">
+                        <img src="img/icon-phone.png" alt="Телефон" class="contact-icon-img">
                     </div>
                     <div>
                         <h3>Телефоны</h3>
                         <p>+7 (495) 123-45-67 — общий</p>
                         <p>+7 (800) 100-10-10 — бесплатный по России</p>
-                        <p class="text-muted" style="font-size: 14px;">Пн-Пт: 9:00-21:00, Сб-Вс: 10:00-18:00</p>
+                        <p class="text-muted text-sm">Пн-Пт: 9:00-21:00, Сб-Вс: 10:00-18:00</p>
                     </div>
                 </div>
 
                 <div class="contact-info mb-20">
-                    <div style="width: 50px; height: 50px; background: #00b0ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                        <img src="img/i-email.png" alt="Email" style="width: 24px;">
+                    <div class="contact-icon-circle">
+                        <img src="img/icon-email.png" alt="Email" class="contact-icon-img">
                     </div>
                     <div>
                         <h3>Электронная почта</h3>
@@ -86,14 +86,14 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                 </div>
 
                 <div class="contact-info">
-                    <div style="width: 50px; height: 50px; background: #00b0ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                        <img src="img/icon-time.png" alt="Время" style="width: 24px;">
+                    <div class="contact-icon-circle">
+                        <img src="img/icon-time.png" alt="Время" class="contact-icon-img">
                     </div>
                     <div>
                         <h3>Время работы</h3>
                         <p>Служба поддержки: 24/7</p>
                         <p>Офис: Пн-Пт 9:00-20:00, Сб 10:00-18:00</p>
-                        <p class="text-muted" style="font-size: 14px;">Воскресенье — выходной</p>
+                        <p class="text-muted text-sm">Воскресенье — выходной</p>
                     </div>
                 </div>
             </div>
@@ -135,7 +135,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
         </div>
 
         <!-- Карта -->
-        <div style="width: 100%; height: 400px; border-radius: 8px; overflow: hidden; margin-bottom: 30px;">
+        <div class="map-container">
             <iframe src="https://yandex.ru/map-widget/v1/?ll=37.416071%2C55.639075&z=17&pt=37.416071,55.639075,pm2rdm" width="100%" height="100%" frameborder="0"></iframe>
         </div>
 
@@ -143,15 +143,15 @@ if (session_status() === PHP_SESSION_NONE) session_start();
         <div class="card">
             <h2 class="mb-20">Часто задаваемые вопросы</h2>
             <div class="mb-20">
-                <h3 style="color: #1a237e; margin-bottom: 10px;">Как отменить или изменить бронирование?</h3>
+                <h3 class="faq-title">Как отменить или изменить бронирование?</h3>
                 <p>Вы можете отменить или изменить бронирование в разделе "Мои бронирования" на нашем сайте. Также вы можете связаться с нашей службой поддержки по телефону +7 (495) 123-45-67.</p>
             </div>
             <div class="mb-20">
-                <h3 style="color: #1a237e; margin-bottom: 10px;">Сколько времени занимает возврат денег за отмененный билет?</h3>
+                <h3 class="faq-title">Сколько времени занимает возврат денег за отмененный билет?</h3>
                 <p>Возврат денежных средств обычно занимает от 7 до 14 рабочих дней в зависимости от вашего банка и способа оплаты.</p>
             </div>
             <div>
-                <h3 style="color: #1a237e; margin-bottom: 10px;">Нужна ли виза для перелёта в выбранную мной страну?</h3>
+                <h3 class="faq-title">Нужна ли виза для перелёта в выбранную мной страну?</h3>
                 <p>AirClick не предоставляет визовую поддержку. Пожалуйста, уточняйте информацию о необходимости визы в консульстве страны назначения.</p>
             </div>
         </div>

@@ -27,7 +27,7 @@
                             <a href="profile.php">Профиль</a>
                             <a href="my-bookings.php" class="active">Мои бронирования</a>
                             <?php if ($_SESSION['user_role'] === 'admin'): ?>
-                                <a href="admin.php" style="color: #ff4081;">Админ-панель</a>
+                                <a href="admin.php" class="text-pink">Админ-панель</a>
                             <?php endif; ?>
                             <a href="php/logout.php">Выход</a>
                         </div>
@@ -40,7 +40,7 @@
     <main>
         <!-- БЛОК ВЫВОДА ОШИБКИ -->
         <?php if (isset($_SESSION['action_error'])): ?>
-            <div class="authy-error" style="text-align: center; margin-bottom: 20px; font-size: 16px; padding: 10px; background: #ffebee; border-radius: 4px; color: #c62828;">
+            <div class="authy-error alert-error-center">
                 <?= htmlspecialchars($_SESSION['action_error']) ?>
             </div>
             <?php unset($_SESSION['action_error']); ?>
@@ -67,34 +67,34 @@
                         <div class="booking-flight-info">
                             <h3 class="mb-10">
                                 <?= htmlspecialchars($b['from_city']) ?> — <?= htmlspecialchars($b['to_city']) ?>
-                                <span class="text-muted" style="font-size: 16px; font-weight: normal; margin-left: 10px;">
+                                <span class="text-muted booking-date-info">
                                     <?= date('d.m.Y', strtotime($b['departure_date'])) ?>
                                     в <?= htmlspecialchars($b['departure_time']) ?> - <?= htmlspecialchars($b['arrival_time']) ?>
                                 </span>
                             </h3>
-                            <p class="text-muted" style="font-size: 14px;">
+                            <p class="text-muted text-sm">
                                 Рейс: <?= htmlspecialchars($b['airline']) ?> • Пассажиров: <?= $b['passenger_count'] ?>
                             </p>
                         </div>
                         
-                        <div class="booking-actions" style="width: 200px;">
-                            <div class="price" style="margin-bottom: 15px;"><?= number_format($b['base_price'] * $b['passenger_count'], 0, '', ' ') ?> ₽</div>
+                        <div class="booking-actions booking-actions-fixed">
+                            <div class="price price-mb-15"><?= number_format($b['base_price'] * $b['passenger_count'], 0, '', ' ') ?> ₽</div>
                             
                             <?php if ($b['status'] == 'active'): ?>
-                                <form action="php/user_booking_action.php" method="POST" class="w-100">
+                                <form action="php/booking.php" method="POST" class="w-100">
                                     <input type="hidden" name="action" value="confirm">
                                     <input type="hidden" name="booking_id" value="<?= $b['id'] ?>">
                                     <button type="submit" class="btn btn-pay btn-block mb-10" onclick="return confirm('Вы уверены, что хотите оплатить эту бронь?')">Оплатить</button>
                                 </form>
                             <?php endif; ?>
                             
-                            <form action="php/user_booking_action.php" method="POST" class="w-100">
+                            <form action="php/booking.php" method="POST" class="w-100">
                                 <input type="hidden" name="action" value="cancel">
                                 <input type="hidden" name="booking_id" value="<?= $b['id'] ?>">
                                 <button type="submit" class="btn btn-secondary btn-block mb-10" onclick="return confirm('Вы уверены?')">Отменить</button>
                             </form>
 
-                            <button class="btn btn-block" style="background: #888;" onclick="toggleDetails(<?= $b['id'] ?>, this)">Детали ▼</button>
+                            <button class="btn btn-block btn-details" onclick="toggleDetails(<?= $b['id'] ?>, this)">Детали ▼</button>
                         </div>
                     </div>
                     
@@ -123,7 +123,7 @@
         <?php else: ?>
             <?php foreach ($past_bookings as $b): ?>
                 <div class="booking-card">
-                    <div class="booking-header" style="background: #fff;">
+                    <div class="booking-header booking-header-past">
                         <strong>Код брони: <?= htmlspecialchars($b['code']) ?></strong>
                         <span class="booking-status status-<?= $b['status'] ?>">
                             <?= $b['status'] == 'cancelled' ? 'Отменено' : 'Завершено' ?>
@@ -133,18 +133,18 @@
                         <div class="booking-flight-info">
                             <h3 class="mb-10">
                                 <?= htmlspecialchars($b['from_city']) ?> — <?= htmlspecialchars($b['to_city']) ?>
-                                <span class="text-muted" style="font-size: 16px; font-weight: normal; margin-left: 10px;">
+                                <span class="text-muted booking-date-info">
                                     <?= date('d.m.Y', strtotime($b['departure_date'])) ?>
                                     в <?= htmlspecialchars($b['departure_time']) ?> - <?= htmlspecialchars($b['arrival_time']) ?>
                                 </span>
                             </h3>
-                            <p class="text-muted" style="font-size: 14px;">
+                            <p class="text-muted text-sm">
                                 Рейс: <?= htmlspecialchars($b['airline']) ?> • Пассажиров: <?= $b['passenger_count'] ?>
                             </p>
                         </div>
                         
-                        <div class="booking-actions" style="width: 200px;">
-                            <div class="price" style="color: #666; margin-bottom: 15px;"><?= number_format($b['base_price'] * $b['passenger_count'], 0, '', ' ') ?> ₽</div>
+                        <div class="booking-actions booking-actions-fixed">
+                            <div class="price price-muted-mb-15"><?= number_format($b['base_price'] * $b['passenger_count'], 0, '', ' ') ?> ₽</div>
                             
                             <?php if ($b['status'] === 'cancelled'): ?>
                                 <?php
@@ -161,7 +161,7 @@
                                         $btnClass = 'btn-pay'; // Зеленая кнопка
                                     }
                                 ?>
-                                    <form action="php/user_booking_action.php" method="POST" class="w-100">
+                                    <form action="php/booking.php" method="POST" class="w-100">
                                         <input type="hidden" name="action" value="restore">
                                         <input type="hidden" name="booking_id" value="<?= $b['id'] ?>">
                                         <button type="submit" class="btn <?= $btnClass ?> btn-block mb-10" onclick="return confirm('<?= $btnText ?>?')"><?= $btnText ?></button>
@@ -169,7 +169,7 @@
                                 <?php endif; ?>
                             <?php endif; ?>
                             
-                            <button class="btn btn-block" style="background: #888;" onclick="toggleDetails(<?= $b['id'] ?>, this)">Детали ▼</button>
+                            <button class="btn btn-block btn-details" onclick="toggleDetails(<?= $b['id'] ?>, this)">Детали ▼</button>
                         </div>
                     </div>
                     
