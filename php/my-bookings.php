@@ -1,7 +1,8 @@
 <?php
+// Получает бронирования пользователя и данные пассажиров.
 session_start();
-require_once 'db.php';
-require_once 'cron_status.php';
+require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/cron_status.php';
 $current_page = 'my-bookings.php';
 
 if (!isset($_SESSION['user_id'])) {
@@ -11,6 +12,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
+// Загружаем все бронирования текущего пользователя.
 // 1. Получаем бронирования
 $sql = "SELECT b.*, f.from_city, f.to_city, f.departure_time, f.arrival_time,
                 f.duration, f.airline, f.flight_number, f.stops,
@@ -28,6 +30,7 @@ mysqli_stmt_execute($stmt);
 $bookings = mysqli_fetch_all(mysqli_stmt_get_result($stmt), MYSQLI_ASSOC);
 mysqli_stmt_close($stmt);
 
+// Одним запросом получаем пассажиров для найденных бронирований.
 // 2. Получаем пассажиров для всех этих броней
 $booking_ids = array_column($bookings, 'id');
 $passengers_by_booking = [];

@@ -1,4 +1,5 @@
 <?php
+// Страница с информацией о компании AirClick.
 if (session_status() === PHP_SESSION_NONE) session_start();
 ?>
 <!DOCTYPE html>
@@ -7,6 +8,16 @@ if (session_status() === PHP_SESSION_NONE) session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>О компании - AirClick</title>
+    <script>
+        (function () {
+            try {
+                var savedTheme = localStorage.getItem('airclick-theme');
+                document.documentElement.setAttribute('data-theme', savedTheme === 'dark' ? 'dark' : 'light');
+            } catch (error) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
@@ -40,6 +51,8 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                 <?php endif; ?>
             </ul>
         </nav>
+        <button type="button" id="theme-toggle" class="theme-toggle"
+                aria-label="Включить тёмную тему" aria-pressed="false" title="Тёмная тема">🌙</button>
     </header>
 
     <main>
@@ -177,5 +190,6 @@ if (session_status() === PHP_SESSION_NONE) session_start();
         </div>
         <div class="copyright">&copy; 2013-2026 AirClick. Все права защищены.</div>
     </footer>
+    <script src="js/theme.js"></script>
 </body>
 </html>

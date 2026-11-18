@@ -1,6 +1,7 @@
 <?php
+// Обрабатывает обновление профиля и смену пароля.
 session_start();
-require_once 'db.php';
+require_once __DIR__ . '/db.php';
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: ../authy.php');
@@ -18,14 +19,15 @@ mysqli_stmt_execute($stmt);
 $user = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
 mysqli_stmt_close($stmt);
 
+// Обрабатываем отправленные формы изменения профиля.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
 
-    if ($action === 'update_info') {
+    // Проверяем и сохраняем контактные и личные данные пользователя.
+if ($action === 'update_info') {
         $email = trim($_POST['email']);
         $phone = trim($_POST['phone']);
         $passport = trim($_POST['passport']);
-        // Добавляем получение даты рождения
         $birth_date = !empty($_POST['birth_date']) ? $_POST['birth_date'] : null; 
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -33,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif (!preg_match('/^8\d{10}$/', $phone)) {
             $error = 'Телефон должен быть в формате 8XXXXXXXXXX';
         } else {
-            // Добавляем birth_date в запрос UPDATE
             $stmt_upd = mysqli_prepare($connect, "UPDATE users SET email = ?, phone = ?, passport = ?, birth_date = ? WHERE id = ?");
             mysqli_stmt_bind_param($stmt_upd, 'ssssi', $email, $phone, $passport, $birth_date, $user_id);
             if (mysqli_stmt_execute($stmt_upd)) {
@@ -57,7 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $row_p = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt_p));
         mysqli_stmt_close($stmt_p);
 
-        if (password_verify($old_pass, $row_p['password'])) {
+        // Проверяем текущий пароль перед сохранением нового.
+if (password_verify($old_pass, $row_p['password'])) {
             if (mb_strlen($new_pass) < 8) {
                 $error = 'Новый пароль должен быть минимум 8 символов';
             } else {

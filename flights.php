@@ -1,10 +1,23 @@
-<?php require_once 'php/flights.php'; ?>
+<?php
+// Страница поиска и просмотра доступных рейсов.
+require_once __DIR__ . '/php/flights.php';
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Поиск рейсов - AirClick</title>
+    <script>
+        (function () {
+            try {
+                var savedTheme = localStorage.getItem('airclick-theme');
+                document.documentElement.setAttribute('data-theme', savedTheme === 'dark' ? 'dark' : 'light');
+            } catch (error) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
@@ -38,6 +51,8 @@
                 <?php endif; ?>
             </ul>
         </nav>
+        <button type="button" id="theme-toggle" class="theme-toggle"
+                aria-label="Включить тёмную тему" aria-pressed="false" title="Тёмная тема">🌙</button>
     </header>
 
     <main>
@@ -46,7 +61,7 @@
         <!-- Форма поиска -->
         <div class="search-form-box">
             <h3>Поиск рейсов</h3>
-            <form action="flights.php" method="GET" class="search-grid">
+            <form action="flights.php" method="GET" class="search-grid" id="flight-search-form">
                 
                 <!-- СКРЫТЫЕ ПОЛЯ: сохраняют текущие фильтры при новом поиске -->
                 <input type="hidden" name="sort" value="<?= htmlspecialchars($sort ?? 'price_asc') ?>">
@@ -55,8 +70,8 @@
 
                 <div class="input-group">
                     <label>Откуда</label>
-                    <select name="from">
-                        <option value="">Выберите город вылета</option>
+                    <select name="from" id="search-from">
+                        <option value="">Все города</option>
                         <?php
                         $cities = ['Москва', 'Санкт-Петербург', 'Сочи', 'Париж', 'Нью-Йорк', 'Токио', 'Дубай', 'Лондон', 'Рим', 'Пекин', 'Стамбул', 'Бангкок', 'Анталья', 'Казань', 'Екатеринбург'];
                         foreach ($cities as $city): ?>
@@ -66,8 +81,8 @@
                 </div>
                 <div class="input-group">
                     <label>Куда</label>
-                    <select name="to">
-                        <option value="">Выберите город назначения</option>
+                    <select name="to" id="search-to">
+                        <option value="">Все города</option>
                         <?php foreach ($cities as $city): ?>
                             <option value="<?= $city ?>" <?= ($to ?? '') === $city ? 'selected' : '' ?>><?= $city ?></option>
                         <?php endforeach; ?>
@@ -79,16 +94,14 @@
                 </div>
                 <div class="input-group">
                     <label>Класс</label>
-                    <select name="class">
+                    <select name="class" id="search-class">
                         <option value="economy" <?= ($class ?? '') === 'economy' ? 'selected' : '' ?>>Эконом</option>
                         <option value="business" <?= ($class ?? '') === 'business' ? 'selected' : '' ?>>Бизнес</option>
                         <option value="first" <?= ($class ?? '') === 'first' ? 'selected' : '' ?>>Первый класс</option>
                     </select>
                 </div>
-                <div class="input-group">
-                    <button type="submit" class="btn btn-block">Найти</button>
-                </div>
             </form>
+            <p class="search-auto-hint">Рейсы обновляются автоматически после выбора маршрута, даты или класса.</p>
         </div>
 
         <!-- Фильтры -->
@@ -258,14 +271,34 @@
     </footer>
 
     <script>
+        // Поиск выполняется автоматически после выбора маршрута, даты или класса.
+        const searchForm = document.getElementById('flight-search-form');
+        const fromSelect = document.getElementById('search-from');
+        const toSelect = document.getElementById('search-to');
+        const classSelect = document.getElementById('search-class');
         const dateInput = document.getElementById('depDate');
+        let searchTimer;
+        function submitFlightSearch() {
+            if (!searchForm || !dateInput || !dateInput.value) return;
+            // Пустое значение в любом поле города означает «Все города».
+            // Поэтому поиск можно выполнять даже при выборе только одного города.
+            window.clearTimeout(searchTimer);
+            searchTimer = window.setTimeout(() => searchForm.requestSubmit(), 180);
+        }
+        if (fromSelect) fromSelect.addEventListener('change', submitFlightSearch);
+        if (toSelect) toSelect.addEventListener('change', submitFlightSearch);
+        if (classSelect) classSelect.addEventListener('change', submitFlightSearch);
+        if (dateInput) dateInput.addEventListener('change', submitFlightSearch);
         if (dateInput) {
-            const today = new Date().toISOString().split('T')[0];
+            const now = new Date();
+            const localOffset = now.getTimezoneOffset() * 60000;
+            const today = new Date(now.getTime() - localOffset).toISOString().slice(0, 10);
             dateInput.min = today;
             if (!dateInput.value) {
                 dateInput.value = today;
             }
         }
     </script>
+    <script src="js/theme.js"></script>
 </body>
 </html>

@@ -1,12 +1,14 @@
 <?php
+// Проверяет регистрационные данные и создаёт учётную запись.
 session_start();
-require_once 'db.php'; // Так как файл лежит в папке php
+require_once __DIR__ . '/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ../reg.php');
     exit;
 }
 
+// Получаем и очищаем данные, отправленные из формы регистрации.
 $login      = trim($_POST['login']      ?? '');
 $password   = $_POST['password']        ?? '';
 $surname    = trim($_POST['surname']    ?? '');
@@ -36,7 +38,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $errors[] = 'Некорректный E-mail';
 }
 
-// Проверка уникальности
+// Проверяем, не заняты ли логин и электронная почта.
 if (!$errors) {
     $stmt = mysqli_prepare($connect, 'SELECT login, email FROM users WHERE login = ? OR email = ? LIMIT 1');
     mysqli_stmt_bind_param($stmt, 'ss', $login, $email);
@@ -58,7 +60,7 @@ if ($errors) {
     exit;
 }
 
-// Хэшируем и записываем в БД
+// Сохраняем пароль в виде хэша и создаём пользователя.
 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
 $stmt = mysqli_prepare(
@@ -72,6 +74,7 @@ mysqli_stmt_bind_param(
 );
 
 if (mysqli_stmt_execute($stmt)) {
+    session_regenerate_id(true);
     $_SESSION['user_id']  = mysqli_insert_id($connect);
     $_SESSION['user_name'] = $name;
     $_SESSION['user_role'] = 'user';

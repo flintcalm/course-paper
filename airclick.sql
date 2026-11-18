@@ -1,6 +1,9 @@
+-- Создаёт базу данных AirClick, её таблицы и начальные данные.
+
 CREATE DATABASE IF NOT EXISTS airclick CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE airclick;
 
+-- Учётные записи пользователей и их контактные данные.
 CREATE TABLE users (
     id          INT PRIMARY KEY AUTO_INCREMENT,
     login       VARCHAR(50)  NOT NULL UNIQUE,
@@ -13,28 +16,29 @@ CREATE TABLE users (
     passport    VARCHAR(30)  NULL,
     birth_date  DATE         NULL,
     gender      ENUM('male','female') NULL,
+    role        ENUM('user', 'admin') NOT NULL DEFAULT 'user',
     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     INDEX idx_login (login),
     INDEX idx_email (email)
-);
-
-ALTER TABLE users ADD role ENUM('user', 'admin') NOT NULL DEFAULT 'user';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO users (login, password, surname, name, patronymic, gender, phone, email, role)
-VALUES ('admin', '$2y$10$vUH4o3i8vTkhv5BURGbLde8t0iDMpxkejW/BSzCSZGyArGeNMI.zG', 'Администратор', 'Главный', NULL, 'male', '80000000000', 'admin@airclick.ru', 'admin');
+VALUES ('admin', '$2y$10$vUH4o3i8vTkhv5BURGbLde8t0iDMpxkejW/BSzCSZGyArGeNMI.zG', 'Администратор', 'Главный', NULL, 'male', '80000000000', 'admin@airclick.ru', 'admin') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Классы обслуживания и коэффициенты стоимости.
 CREATE TABLE fare_classes (
     id          INT PRIMARY KEY AUTO_INCREMENT,
     code        ENUM('economy','business','first') NOT NULL UNIQUE,
     name        VARCHAR(50) NOT NULL,
     coefficient DECIMAL(4,2) NOT NULL DEFAULT 1.00
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO fare_classes (code, name, coefficient) VALUES
 ('economy',  'Эконом',         1.00),
 ('business', 'Бизнес',         2.00),
-('first',    'Первый класс',   3.00);
+('first',    'Первый класс',   3.00) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Расписание рейсов, маршрут, время и доступные места.
 CREATE TABLE flights (
     id               INT PRIMARY KEY AUTO_INCREMENT,
     from_city        VARCHAR(100)   NOT NULL,
@@ -51,8 +55,9 @@ CREATE TABLE flights (
     INDEX idx_from  (from_city),
     INDEX idx_to    (to_city),
     INDEX idx_price (price)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Бронирования пользователей и выбранные параметры билета.
 CREATE TABLE bookings (
     id              INT PRIMARY KEY AUTO_INCREMENT,
     code            VARCHAR(20)   NOT NULL UNIQUE,
@@ -67,8 +72,9 @@ CREATE TABLE bookings (
     INDEX idx_bookings_user  (user_id),
     INDEX idx_bookings_email (email),
     INDEX idx_bookings_code  (code)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Персональные данные пассажиров, указанные при бронировании.
 CREATE TABLE passengers (
     id             INT PRIMARY KEY AUTO_INCREMENT,
     booking_id     INT          NOT NULL,
@@ -76,11 +82,13 @@ CREATE TABLE passengers (
     name           VARCHAR(100) NOT NULL,
     patronymic     VARCHAR(100) NULL,
     birth_date     DATE         NOT NULL,
+    ticket_type    ENUM('adult','child') NOT NULL DEFAULT 'adult',
     gender         ENUM('male','female') NOT NULL,
     document       VARCHAR(30)  NOT NULL,
     INDEX idx_passengers_booking (booking_id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Сообщения, отправленные через форму обратной связи.
 CREATE TABLE contact_messages (
     id         INT PRIMARY KEY AUTO_INCREMENT,
     name       VARCHAR(255) NOT NULL,
@@ -89,7 +97,7 @@ CREATE TABLE contact_messages (
     subject    VARCHAR(50)  NOT NULL,
     message    TEXT         NOT NULL,
     created_at TIMESTAMP    DEFAULT CURRENT_TIMESTAMP
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Связь бронирования с пользователем
 ALTER TABLE bookings
@@ -643,4 +651,4 @@ INSERT INTO flights (from_city, to_city, departure_time, arrival_time, duration,
 ('Рим (FCO)', 'Дубай (DXB)', '14:30', '22:30', '6ч 00м', 360, 'Эмирейтс', 'EK 098', 'Боинг 777', 29800, 'прямой рейс'),
 ('Пекин (PEK)', 'Москва (SVO)', '08:15', '16:15', '8ч 00м', 480, 'Аэрофлот', 'SU 281', 'Боинг 777', 43800, 'прямой рейс'),
 ('Пекин (PEK)', 'Санкт-Петербург (LED)', '13:40', '22:10', '8ч 30м', 510, 'S7 Airlines', 'S7 281', 'Аэробус A330', 40500, 'прямой рейс'),
-('Пекин (PEK)', 'Дубай (DXB)', '17:20', '22:20', '9ч 00м', 540, 'Эмирейтс', 'EK 310', 'Боинг 777', 44500, 'прямой рейс');
+('Пекин (PEK)', 'Дубай (DXB)', '17:20', '22:20', '9ч 00м', 540, 'Эмирейтс', 'EK 310', 'Боинг 777', 44500, 'прямой рейс') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

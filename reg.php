@@ -1,4 +1,5 @@
 <?php
+// Страница регистрации нового пользователя.
 session_start();
 $current_page = basename($_SERVER['PHP_SELF']);
 // Получаем ошибки и старые данные, затем сразу удаляем их из сессии
@@ -12,6 +13,16 @@ unset($_SESSION['reg_errors'], $_SESSION['reg_old']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Регистрация - AirClick</title>
+    <script>
+        (function () {
+            try {
+                var savedTheme = localStorage.getItem('airclick-theme');
+                document.documentElement.setAttribute('data-theme', savedTheme === 'dark' ? 'dark' : 'light');
+            } catch (error) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
@@ -45,6 +56,8 @@ unset($_SESSION['reg_errors'], $_SESSION['reg_old']);
                 <?php endif; ?>
             </ul>
         </nav>
+        <button type="button" id="theme-toggle" class="theme-toggle"
+                aria-label="Включить тёмную тему" aria-pressed="false" title="Тёмная тема">🌙</button>
     </header>
 
     <main class="authy">
@@ -155,5 +168,6 @@ unset($_SESSION['reg_errors'], $_SESSION['reg_old']);
             <p>&copy; 2013-2026 AirClick. Все права защищены.</p>
         </div>
     </footer>
+    <script src="js/theme.js"></script>
 </body>
 </html>

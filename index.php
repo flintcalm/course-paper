@@ -1,4 +1,5 @@
 <?php
+// Главная страница: поиск билетов, преимущества и популярные направления.
 if (session_status() === PHP_SESSION_NONE) session_start();
 $current_page = basename($_SERVER['PHP_SELF']);
 
@@ -11,6 +12,16 @@ $cities = ['Москва', 'Санкт-Петербург', 'Сочи', 'Пар�
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AirClick - Бронирование авиабилетов</title>
+    <script>
+        (function () {
+            try {
+                var savedTheme = localStorage.getItem('airclick-theme');
+                document.documentElement.setAttribute('data-theme', savedTheme === 'dark' ? 'dark' : 'light');
+            } catch (error) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
@@ -44,6 +55,8 @@ $cities = ['Москва', 'Санкт-Петербург', 'Сочи', 'Пар�
                 <?php endif; ?>
             </ul>
         </nav>
+        <button type="button" id="theme-toggle" class="theme-toggle"
+                aria-label="Включить тёмную тему" aria-pressed="false" title="Тёмная тема">🌙</button>
     </header>
 
     <main>
@@ -59,7 +72,7 @@ $cities = ['Москва', 'Санкт-Петербург', 'Сочи', 'Пар�
                         <div class="form-group">
                             <label>Откуда</label>
                             <select name="from">
-                                <option value="">Выберите город вылета</option>
+                                <option value="">Все города</option>
                                 <?php foreach ($cities as $city): ?>
                                     <option value="<?= $city ?>"><?= $city ?></option>
                                 <?php endforeach; ?>
@@ -70,7 +83,7 @@ $cities = ['Москва', 'Санкт-Петербург', 'Сочи', 'Пар�
                         <div class="form-group">
                             <label>Куда</label>
                             <select name="to">
-                                <option value="">Выберите город назначения</option>
+                                <option value="">Все города</option>
                                 <?php foreach ($cities as $city): ?>
                                     <option value="<?= $city ?>"><?= $city ?></option>
                                 <?php endforeach; ?>
@@ -255,5 +268,6 @@ $cities = ['Москва', 'Санкт-Петербург', 'Сочи', 'Пар�
             dateInput.value = today;
         }
     </script>
+    <script src="js/theme.js"></script>
 </body>
 </html>

@@ -1,4 +1,5 @@
 <?php
+// Страница входа в личный кабинет.
 session_start();
 $current_page = basename($_SERVER['PHP_SELF']);
 // Если пользователь уже вошел, отправляем его на главную или в бронирования
@@ -16,6 +17,16 @@ unset($_SESSION['authy_error']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход - AirClick</title>
+    <script>
+        (function () {
+            try {
+                var savedTheme = localStorage.getItem('airclick-theme');
+                document.documentElement.setAttribute('data-theme', savedTheme === 'dark' ? 'dark' : 'light');
+            } catch (error) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
@@ -49,6 +60,8 @@ unset($_SESSION['authy_error']);
                 <?php endif; ?>
             </ul>
         </nav>
+        <button type="button" id="theme-toggle" class="theme-toggle"
+                aria-label="Включить тёмную тему" aria-pressed="false" title="Тёмная тема">🌙</button>
     </header>
 
     <main class="authy">
@@ -117,5 +130,6 @@ unset($_SESSION['authy_error']);
             <p>&copy; 2013-2026 AirClick. Все права защищены.</p>
         </div>
     </footer>
+    <script src="js/theme.js"></script>
 </body>
 </html>

@@ -1,9 +1,9 @@
 <?php
-// admin.php
+// Проверяет права администратора и обрабатывает действия панели управления.
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-require_once 'db.php';
+require_once __DIR__ . '/db.php';
 
 // Защита: только для админа
 if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
@@ -11,9 +11,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
     exit;
 }
 
-// ==========================================
-// ЛОГИКА ИЗ admin_action.php
-// ==========================================
+// Обрабатываем действия администратора, отправленные из форм.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
 
@@ -111,13 +109,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Location: ' . $redirect_url);
     exit;
 }
-// ==========================================
 
 $current_page = 'admin.php';
 
+// Подготавливаем данные, которые используются в фильтрах панели.
 // Список городов для выпадающих списков
 $cities = ['Москва', 'Санкт-Петербург', 'Сочи', 'Париж', 'Нью-Йорк', 'Токио', 'Дубай', 'Лондон', 'Рим', 'Пекин', 'Стамбул', 'Бангкок', 'Анталья', 'Казань', 'Екатеринбург'];
 
+// Загружаем пользователей для выбора записи в панели.
 // 1. Получаем всех пользователей
 $users_result = mysqli_query($connect, "SELECT id, login, surname, name, email, phone, role, created_at FROM users ORDER BY id DESC");
 $users = mysqli_fetch_all($users_result, MYSQLI_ASSOC);
@@ -153,10 +152,12 @@ if ($selected_user_id > 0) {
     }
 }
 
+// Загружаем обращения, отправленные через форму контактов.
 // 3. Получаем сообщения
 $messages_result = mysqli_query($connect, "SELECT * FROM contact_messages ORDER BY created_at DESC");
 $messages = mysqli_fetch_all($messages_result, MYSQLI_ASSOC);
 
+// Формируем список рейсов с учётом выбранных фильтров.
 // 4. Получаем рейсы с учетом фильтров и сортировки
 $f_from = $_GET['f_from'] ?? '';
 $f_to = $_GET['f_to'] ?? '';

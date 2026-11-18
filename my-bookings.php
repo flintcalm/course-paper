@@ -1,10 +1,23 @@
-<?php require_once 'php/my-bookings.php'; ?>
+<?php
+// Страница со списком бронирований текущего пользователя.
+require_once __DIR__ . '/php/my-bookings.php';
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мои бронирования - AirClick</title>
+    <script>
+        (function () {
+            try {
+                var savedTheme = localStorage.getItem('airclick-theme');
+                document.documentElement.setAttribute('data-theme', savedTheme === 'dark' ? 'dark' : 'light');
+            } catch (error) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
@@ -35,6 +48,8 @@
                 <?php endif; ?>
             </ul>
         </nav>
+        <button type="button" id="theme-toggle" class="theme-toggle"
+                aria-label="Включить тёмную тему" aria-pressed="false" title="Тёмная тема">🌙</button>
     </header>
 
     <main>
@@ -104,7 +119,7 @@
                             <?php foreach ($b['passengers'] as $p): ?>
                                 <li>
                                     <b><?= htmlspecialchars($p['surname'] . ' ' . $p['name'] . ' ' . $p['patronymic']) ?></b><br>
-                                    Дата рождения: <?= date('d.m.Y', strtotime($p['birth_date'])) ?> • Документ: <?= htmlspecialchars($p['document']) ?>
+                                    Тип билета: <?= (($p['ticket_type'] ?? 'adult') === 'child') ? 'Детский' : 'Взрослый' ?> • Дата рождения: <?= date('d.m.Y', strtotime($p['birth_date'])) ?> • Документ: <?= htmlspecialchars($p['document']) ?>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
@@ -179,7 +194,7 @@
                             <?php foreach ($b['passengers'] as $p): ?>
                                 <li>
                                     <b><?= htmlspecialchars($p['surname'] . ' ' . $p['name'] . ' ' . $p['patronymic']) ?></b><br>
-                                    Дата рождения: <?= date('d.m.Y', strtotime($p['birth_date'])) ?> • Документ: <?= htmlspecialchars($p['document']) ?>
+                                    Тип билета: <?= (($p['ticket_type'] ?? 'adult') === 'child') ? 'Детский' : 'Взрослый' ?> • Дата рождения: <?= date('d.m.Y', strtotime($p['birth_date'])) ?> • Документ: <?= htmlspecialchars($p['document']) ?>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
@@ -225,5 +240,6 @@
             }
         }
     </script>
+    <script src="js/theme.js"></script>
 </body>
 </html>

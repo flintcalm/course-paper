@@ -1,10 +1,12 @@
 <?php
+// Обрабатывает параметры поиска, фильтры, сортировку и список рейсов.
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-require_once 'db.php';
+require_once __DIR__ . '/db.php';
 $current_page = basename($_SERVER['PHP_SELF']);
 
+// Получаем параметры поиска из адресной строки.
 $from = $_GET['from'] ?? '';
 $to = $_GET['to'] ?? '';
 $departure = $_GET['departure'] ?? date('Y-m-d'); // Если дата не выбрана, ставим сегодня
@@ -13,6 +15,7 @@ $sort = $_GET['sort'] ?? 'price_asc';
 $airline = $_GET['airlines'] ?? 'all';
 $price_range = $_GET['price_range'] ?? 'all';
 
+// Основной запрос считает занятые места и исключает недоступные рейсы.
 // Формируем базовый SQL с подсчетом занятых мест и скрытием рейсов, до которых < 2 часов
 $sql = "SELECT f.*, (f.price * fc.coefficient) AS final_price, fc.name AS class_name,
         (SELECT COUNT(*) FROM passengers p
@@ -27,6 +30,7 @@ $sql = "SELECT f.*, (f.price * fc.coefficient) AS final_price, fc.name AS class_
 $params = [$class, $departure, $class, $departure];
 $types = 'ssss';
 
+// Добавляем условия поиска по городам отправления и прибытия.
 // Фильтр "Откуда"
 if ($from) {
     $sql .= " AND f.from_city LIKE ?";
@@ -41,6 +45,7 @@ if ($to) {
     $types .= 's';
 }
 
+// При необходимости ограничиваем результаты выбранной авиакомпанией.
 // Фильтр "Авиакомпания"
 if ($airline !== 'all') {
     $sql .= " AND f.airline = ?";
@@ -61,6 +66,7 @@ if ($price_range !== 'all') {
     }
 }
 
+// Выбираем порядок отображения найденных рейсов.
 // Сортировка
 switch ($sort) {
     case 'price_desc': $sql .= " ORDER BY final_price DESC"; break;
@@ -69,6 +75,7 @@ switch ($sort) {
     default: $sql .= " ORDER BY final_price ASC"; break;
 }
 
+// Разбиваем результаты на страницы и рассчитываем их количество.
 // ПАГИНАЦИЯ
 $limit = 10;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;

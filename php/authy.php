@@ -1,12 +1,14 @@
 <?php
+// Проверяет учётные данные и выполняет вход пользователя.
 session_start();
-require_once 'db.php';
+require_once __DIR__ . '/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ../authy.php');
     exit;
 }
 
+// Получаем логин и пароль из формы входа.
 $login    = trim($_POST['login'] ?? '');
 $password = $_POST['password']   ?? '';
 
@@ -17,7 +19,9 @@ $res = mysqli_stmt_get_result($stmt);
 $user = mysqli_fetch_assoc($res);
 mysqli_stmt_close($stmt);
 
+// Сверяем пароль с хэшем, сохранённым в базе данных.
 if ($user && password_verify($password, $user['password'])) {
+    session_regenerate_id(true);
     $_SESSION['user_id']   = $user['id'];
     $_SESSION['user_name'] = $user['name'];
     $_SESSION['user_role'] = $user['role'];

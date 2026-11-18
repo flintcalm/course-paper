@@ -1,6 +1,7 @@
 <?php
+// Страница оформления бронирования и ввода данных пассажира.
 // Подключаем всю логику
-require_once 'php/booking.php';
+require_once __DIR__ . '/php/booking.php';
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -8,6 +9,16 @@ require_once 'php/booking.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Бронирование - AirClick</title>
+    <script>
+        (function () {
+            try {
+                var savedTheme = localStorage.getItem('airclick-theme');
+                document.documentElement.setAttribute('data-theme', savedTheme === 'dark' ? 'dark' : 'light');
+            } catch (error) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
@@ -42,6 +53,8 @@ require_once 'php/booking.php';
                 <?php endif; ?>
             </ul>
         </nav>
+        <button type="button" id="theme-toggle" class="theme-toggle"
+                aria-label="Включить тёмную тему" aria-pressed="false" title="Тёмная тема">🌙</button>
     </header>
 
         <main>
@@ -81,8 +94,26 @@ require_once 'php/booking.php';
                 <input type="hidden" name="departure_date" value="<?= htmlspecialchars($departure_date) ?>">
 
                 <div class="passenger-form">
-                    <div class="passenger-header"><h4>Пассажир 1 (Взрослый)</h4></div>
-                    
+                    <?php
+                    $defaultTicketType = 'adult';
+                    if (!empty($user['birth_date'])) {
+                        try {
+                            $defaultAge = (new DateTime($user['birth_date']))->diff(new DateTime('today'))->y;
+                            $defaultTicketType = $defaultAge < 18 ? 'child' : 'adult';
+                        } catch (Throwable $e) { $defaultTicketType = 'adult'; }
+                    }
+                ?>
+                <div class="passenger-header"><h4 id="passenger-heading">Пассажир 1 (<?= $defaultTicketType === 'child' ? 'Детский' : 'Взрослый' ?>)</h4></div>
+
+                    <div class="form-group ticket-type-group">
+                        <label for="ticket-type">Тип билета *</label>
+                        <select name="ticket_type" id="ticket-type" required>
+                            <option value="adult" <?= $defaultTicketType === 'adult' ? 'selected' : '' ?>>Взрослый (18 лет и старше)</option>
+                            <option value="child" <?= $defaultTicketType === 'child' ? 'selected' : '' ?>>Детский (младше 18 лет)</option>
+                        </select>
+                        <small class="field-hint" id="ticket-age-hint">Для взрослого билета пассажиру должно быть 18 лет или больше.</small>
+                    </div>
+
                     <div class="form-row">
                         <div class="form-group form-col">
                             <label>Фамилия *</label>
@@ -99,13 +130,14 @@ require_once 'php/booking.php';
                         </div>
                     </div>
                     
-                    <div class="form-row-spaced">
-                        <div class="form-group form-col">
-                            <label>Дата рождения *</label>
-                            <input type="date" name="birth_date" value="<?= htmlspecialchars($user['birth_date'] ?? '') ?>" required>
+                    <div class="passenger-personal-row">
+                        <div class="form-group">
+                            <label for="birth-date">Дата рождения *</label>
+                            <input type="date" id="birth-date" name="birth_date" value="<?= htmlspecialchars($user['birth_date'] ?? '') ?>" required>
+                            <small class="field-error" id="birth-date-error" aria-live="polite"></small>
                         </div>
                         
-                        <div class="form-group form-col">
+                        <div class="form-group">
                             <label>Пол *</label>
                             <div class="radio-group">
                                 <label class="radio-box">
@@ -120,9 +152,9 @@ require_once 'php/booking.php';
                             </div>
                         </div>
                         
-                        <div class="form-group form-col">
-                            <label>Номер документа *</label>
-                            <input type="text" name="document" value="<?= htmlspecialchars($user['passport'] ?? '') ?>" placeholder="Серия и номер паспорта" required>
+                        <div class="form-group">
+                            <label for="passenger-document">Номер документа *</label>
+                            <input type="text" id="passenger-document" name="document" value="<?= htmlspecialchars($user['passport'] ?? '') ?>" placeholder="Серия и номер паспорта" required>
                         </div>
                     </div>
                 </div>
@@ -197,5 +229,58 @@ require_once 'php/booking.php';
             birthInput.max = maxDate;
         }
     </script>
+    <script>
+    (() => {
+        const typeSelect = document.getElementById('ticket-type');
+        const birthInput = document.getElementById('birth-date');
+        const heading = document.getElementById('passenger-heading');
+        const hint = document.getElementById('ticket-age-hint');
+        const error = document.getElementById('birth-date-error');
+        const form = document.getElementById('booking-form');
+        if (!typeSelect || !birthInput || !form) return;
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const iso = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        const adultCutoff = new Date(today);
+        adultCutoff.setFullYear(adultCutoff.getFullYear() - 18);
+        const childMin = new Date(adultCutoff);
+        childMin.setDate(childMin.getDate() + 1);
+
+        function updateAgeRules() {
+            const isChild = typeSelect.value === 'child';
+            birthInput.max = isChild ? iso(today) : iso(adultCutoff);
+            birthInput.min = isChild ? iso(childMin) : '1900-01-01';
+            if (heading) heading.textContent = `Пассажир 1 (${isChild ? 'Детский' : 'Взрослый'})`;
+            if (hint) hint.textContent = isChild
+                ? 'Для детского билета пассажиру должно быть меньше 18 лет.'
+                : 'Для взрослого билета пассажиру должно быть 18 лет или больше.';
+            validateBirthDate();
+        }
+
+        function validateBirthDate() {
+            const value = birthInput.value;
+            const invalid = value && (value < birthInput.min || value > birthInput.max);
+            birthInput.setCustomValidity(invalid
+                ? (typeSelect.value === 'child'
+                    ? 'Для детского билета возраст должен быть меньше 18 лет.'
+                    : 'Для взрослого билета возраст должен быть не меньше 18 лет.')
+                : '');
+            if (error) error.textContent = invalid ? birthInput.validationMessage : '';
+            return !invalid;
+        }
+
+        typeSelect.addEventListener('change', updateAgeRules);
+        birthInput.addEventListener('change', validateBirthDate);
+        form.addEventListener('submit', event => {
+            if (!validateBirthDate()) {
+                event.preventDefault();
+                birthInput.reportValidity();
+            }
+        });
+        updateAgeRules();
+    })();
+    </script>
+    <script src="js/theme.js"></script>
 </body>
 </html>
